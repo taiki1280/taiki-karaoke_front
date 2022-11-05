@@ -8,7 +8,13 @@ docker compose run --rm node sh -c "yarn global add create-react-app && create-r
 
 コンテナ内に入って行ったこと
 
-```
+```bash
 yarn add -D tailwindcss postcss autoprefixer cssnano
 yarn tailwindcss init -p
+```
+
+## 別のPCから初めてコンテナ起動した場合
+
+```bash
+docker compose run --rm node sh -c "cd taiki-karaoke && yarn"
 ```
