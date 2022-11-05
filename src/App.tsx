@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Top from './Top';
+import ScoreTop from './score/pages/ScoreTop';
+// import ScoreDetail from './score/pages/ScoreDetail';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter basename="/taiki-karaoke/">
+      <Header />
+      <Nav />
+      <main className='p-4'>
+        <Routes>
+          <Route path='/' element={<Top />} />
+          <Route path='/score' element={<ScoreTop />} />
+          {/* <Route path='/score/:id' element={ScoreDetail} /> */}
+          {/* <Route render={() => <h4>not found...</h4>} /> */}
+        </Routes>
+      </main>
+    </BrowserRouter>
+  )
 }
 
 export default App;
