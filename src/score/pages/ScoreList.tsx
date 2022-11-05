@@ -1,36 +1,9 @@
 import ScoreContent from '../components/ScoreContent'
+import ScoreSearchForm from '../components/ScoreSearchForm'
 
 const ScoreList = () => {
 
-  let param = {
-    artist_name: 'ヨルシカ',
-    contents_name: '',
-    by_song: 'max_point',
-    order_by: 'point'
-  }
-
-  const bySongList = [
-    { value: '', label: '未選択' },
-    { value: 'max_point', label: '素点（自己ベスト）' },
-    { value: 'min_point', label: '素点（自己ワースト）' },
-    { value: 'max_total_point', label: '総合点（自己ベスト）' },
-    { value: 'min_total_point', label: '総合点（自己ワースト）' }
-  ]
-
-  const orderByList = [
-    { value: 'date_time', label: '日付（昇順）' },
-    { value: '-date_time', label: '日付（降順）' },
-    { value: 'point', label: '素点（昇順）' },
-    { value: '-point', label: '素点（降順）' },
-    { value: 'total_point', label: '総合点（昇順）' },
-    { value: '-total_point', label: '総合点（降順）' },
-    { value: 'song__artist_name', label: 'アーティスト名（昇順）' },
-    { value: '-song__artist_name', label: 'アーティスト名（降順）' },
-    { value: 'song__contents_name', label: '曲名（昇順）' },
-    { value: '-song__contents_name', label: '曲名（降順）' },
-  ]
-
-  let loading = false;
+  let loaded = true
 
   type Score = {
     date_time: String,
@@ -54,38 +27,34 @@ const ScoreList = () => {
     }
   }
 
-  var score_list: Score[] = new Array();
+  var score_list: Score[] = []
 
-  for (let i = 1; i <= 50; i++) {
-    let copy_score = Object.assign({}, score);
-    let copy_song = Object.assign({}, score.song);
-    copy_song['d_contents_name'] += String(i);
-    copy_score['song'] = copy_song;
-    copy_score['id'] = i;
-    score_list.push(copy_score);
+  for (let i = 1; i <= Math.floor(Math.random() * 10000); i++) {
+    let copy_score = Object.assign({}, score)
+    let copy_song = Object.assign({}, score.song)
+    copy_song.d_artist_name += String(Math.floor(Math.random() * 100))
+    copy_song.d_contents_name += String(Math.floor(Math.random() * 100))
+    copy_score.song = copy_song
+    copy_score.id = i
+    copy_score.point = Math.random() * 100
+    copy_score.total_point = Math.random() * 100
+    score_list.push(copy_score)
   }
-
 
   return (
     <>
       {
-        loading ?
+        loaded ?
+          <>
+            <ScoreSearchForm />
+            <h1 className='text-xl'>検索結果は {Object.keys(score_list).length}件 でした～</h1>
+            {score_list.map((score: Score) => <ScoreContent score={score} key={String(score.id)} />)}
+          </>
+          :
           <div>
             <h1 className='text-5xl text-center font-semibold p-10'>Now Loading...</h1>
             <h1 className='text-5xl text-center font-semibold p-10'>データ取得中だよ～</h1>
           </div>
-          :
-          <>
-            <h1 className='text-xl'>検索結果は {Object.keys(score_list).length}件 でした～</h1>
-
-            {
-              score_list.map(
-                (score: Score) => {
-                  return <ScoreContent score={score} />;
-                }
-              )
-            }
-          </>
       }
     </>
   )
