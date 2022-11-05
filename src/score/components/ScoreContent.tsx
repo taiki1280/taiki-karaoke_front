@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 interface Score {
   score: {
@@ -15,7 +15,7 @@ interface Score {
 }
 
 const ScoreContent: FC<Score> = ({ score }) => {
-  // let col_span = 7;
+  // let col_span = 7
   // <div className="list">
   //   <span className="point">{score.point.toFixed(3)}</span>
   //   <time className="date_time">{score.date_time}</time>
@@ -32,7 +32,11 @@ const ScoreContent: FC<Score> = ({ score }) => {
           <span className='point text-lg'>{score.point.toFixed(3)}</span>
           <div className='flex items-center justify-around w-full'>
             <span className="total_point basis-full text-center text-xs">{score.total_point.toFixed(3)}</span>
-            <Link className="detail basis-full text-center text-xs text-blue-500 underline underline-offset-1" to={`score/${score.id}`}>詳細</Link>
+            <Link
+              className="detail basis-full text-center text-xs text-blue-500 underline underline-offset-1"
+              to={`/score/${score.id}`}>
+              詳細
+            </Link>
           </div>
         </div>
         <div className='basis-8/12 flex flex-col md:basis-10/12'>
