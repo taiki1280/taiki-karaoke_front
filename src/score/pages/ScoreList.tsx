@@ -1,6 +1,6 @@
 import ScoreContent from '../components/ScoreContent'
 
-const ScoreTop = () => {
+const ScoreList = () => {
 
   let param = {
     artist_name: 'ヨルシカ',
@@ -91,4 +91,4 @@ const ScoreTop = () => {
   )
 }
 
-export default ScoreTop
+export default ScoreList
