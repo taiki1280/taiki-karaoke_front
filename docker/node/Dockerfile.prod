@@ -1,0 +1,12 @@
+# ビルドフェーズ
+FROM node:alpine
+WORKDIR /taiki-karaoke
+COPY ./node/taiki-karaoke/package.json ./
+RUN npm install
+COPY ./node/taiki-karaoke .
+RUN npm run build
+
+# 実行フェーズ
+FROM nginx
+COPY ./node/etc/nginx/conf.d/taiki-karaoke.conf /etc/nginx/conf.d/taiki-karaoke.conf
+COPY --from=0 /taiki-karaoke/build /usr/share/nginx/html/

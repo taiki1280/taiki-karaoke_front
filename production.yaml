@@ -1,0 +1,14 @@
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile.prod
+    container_name: "taiki-karaoke"
+    environment:
+      VIRTUAL_HOST: 'taiki-web.ninsan.mydns.jp'
+      restart: always
+
+networks:
+  default:
+    external: true
+    name: sample-network
