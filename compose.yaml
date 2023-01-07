@@ -1,11 +1,20 @@
 services:
-  node:
-    build: ./docker/node
-    container_name: "taiki-karaoke"
+  front:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    container_name: "karaoke_front"
     volumes:
-      - ./node:/usr/src/app:cached
-    command: sh -c "cd taiki-karaoke && yarn start"
+      - ./:/karaoke:cached
+      - karaoke_front-node_modules:/karaoke/node_modules
+    command: yarn start
     ports:
       - "3000:3000"
 volumes:
-  front-node-modules:
+  karaoke_front-node_modules:
+
+
+networks:
+  default:
+    external: true
+    name: taiki-network
