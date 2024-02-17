@@ -45,30 +45,29 @@
 				"prettier.singleQuote": true,
 				"editor.tabSize": 4,
 				"workbench.colorCustomizations": {
-					"[Default Dark+]": {
-						// タイトルバーの背景色
-						"titleBar.activeBackground": "#68A063",
-						// タイトルバーの文字色
-						"titleBar.activeForeground": "#303030",
-						"statusBar.background": "#3C873A",
-						"statusBar.foreground": "#303030"
-					}
-				},
-				"cSpell.words": [
-					"devcontainer",
-					"humao",
-					"Gruntfuggly",
-					"esbenp",
-					"TTFB",
-					"precache",
-					"precached",
-					"precaching",
-					"denmoku",
-					"kobushi",
-					"shakuri",
-					"longtone"
-				]
-			}
+					// タイトルバーの背景色
+					"titleBar.activeBackground": "#68A063",
+					"titleBar.inactiveBackground": "#68A063",
+					// タイトルバーの文字色
+					"titleBar.activeForeground": "#303030",
+					"statusBar.background": "#3C873A",
+					"statusBar.foreground": "#303030"
+				}
+			},
+			"cSpell.words": [
+				"devcontainer",
+				"humao",
+				"Gruntfuggly",
+				"esbenp",
+				"TTFB",
+				"precache",
+				"precached",
+				"precaching",
+				"denmoku",
+				"kobushi",
+				"shakuri",
+				"longtone"
+			]
 		}
 	},
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
