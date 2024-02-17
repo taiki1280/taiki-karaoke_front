@@ -84,20 +84,15 @@ function handleSortByDescend(score_list: Score[], sort_key_name: string) {
   return line
 }
 
-function handleDeleteDuplicate(score_list: Score[]) {
-  let duplicate_song_list: String[] = []
-  return (
-    score_list
-      .map<Score>((score: any) => {
-        if (duplicate_song_list.includes(score['requestNo__contentsName'])) return
-        if (score['requestNo__contentsName'] != undefined) {
-          duplicate_song_list.push(score['requestNo__contentsName'])
-          return score
-        }
-      })
-      // filterでundefinedを削除
-      .filter((score) => score)
-  )
+function handleDeleteDuplicateByContentsName(score_list: Score[]) {
+  const result_list: Score[] = score_list.reduce((a: Score[], v: Score) => {
+    if (!a.some((e) => e['requestNo__contentsName'] === v['requestNo__contentsName'])) {
+      a.push(v)
+    }
+    return a
+  }, [])
+
+  return result_list
 }
 
 const ScoreList = () => {
@@ -133,64 +128,64 @@ const ScoreList = () => {
     console.log(by_song)
 
     let score_list: Score[] = handleFilterArtist(all_score_list, artist_name)
-    if (contents_name != '') {
+    if (contents_name !== '') {
       score_list = handleFilterSong(score_list, contents_name)
     }
 
     let bonus_point_name = ''
-    if (denmoku == 'ai') {
+    if (denmoku === 'ai') {
       bonus_point_name = 'aiSensitivityBonus'
-    } else if (denmoku == 'dxg') {
+    } else if (denmoku === 'dxg') {
       bonus_point_name = 'bonusPoint'
     }
 
-    if (by_song == 'max_point' && bonus_point_name != '') {
+    if (by_song === 'max_point' && bonus_point_name !== '') {
       // 降順で並び替え（素点）
       score_list = handleSortPointByDescend(score_list, 'totalPoints', bonus_point_name)
-    } else if (by_song == 'max_total_point') {
+    } else if (by_song === 'max_total_point') {
       // 降順で並び替え（総合点）
       score_list = handleSortByDescend(score_list, 'totalPoints')
-    } else if (by_song == 'min_point' && bonus_point_name != '') {
+    } else if (by_song === 'min_point' && bonus_point_name !== '') {
       // 昇順で並び替え（素点）
       score_list = handleSortPointByAscend(score_list, 'totalPoints', bonus_point_name)
-    } else if (by_song == 'min_point') {
+    } else if (by_song === 'min_point') {
       // 昇順で並び替え（素点）
       score_list = handleSortByAscend(score_list, 'totalPoints')
     }
 
-    if (by_song != '') {
+    if (by_song !== '') {
       // 曲名の重複を削除
-      score_list = handleDeleteDuplicate(score_list)
+      score_list = handleDeleteDuplicateByContentsName(score_list)
     }
 
-    if (order_by == 'date_time') {
+    if (order_by === 'date_time') {
       // 昇順で並び替え（点数）
       score_list = handleSortByAscend(score_list, 'scoringDateTime')
-    } else if (order_by == 'point') {
+    } else if (order_by === 'point') {
       // 昇順で並び替え（点数）
       score_list = handleSortPointByAscend(score_list, 'totalPoints', bonus_point_name)
-    } else if (order_by == 'total_point') {
+    } else if (order_by === 'total_point') {
       // 昇順で並び替え（総合点）
       score_list = handleSortByAscend(score_list, 'totalPoints')
-    } else if (order_by == 'song__artist_name') {
+    } else if (order_by === 'song__artist_name') {
       // 昇順で並び替え（総合点）
       score_list = handleSortByAscend(score_list, 'requestNo__artist__artistName')
-    } else if (order_by == 'song__contents_name') {
+    } else if (order_by === 'song__contents_name') {
       // 昇順で並び替え（総合点）
       score_list = handleSortByAscend(score_list, 'requestNo__contentsName')
-    } else if (order_by == '-date_time') {
+    } else if (order_by === '-date_time') {
       // 降順で並び替え（点数）
       score_list = handleSortByDescend(score_list, 'scoringDateTime')
-    } else if (order_by == '-point') {
+    } else if (order_by === '-point') {
       // 降順で並び替え（点数）
       score_list = handleSortPointByDescend(score_list, 'totalPoints', bonus_point_name)
-    } else if (order_by == '-total_point') {
+    } else if (order_by === '-total_point') {
       // 降順で並び替え（総合点）
       score_list = handleSortByDescend(score_list, 'totalPoints')
-    } else if (order_by == '-song__artist_name') {
+    } else if (order_by === '-song__artist_name') {
       // 降順で並び替え（総合点）
       score_list = handleSortByDescend(score_list, 'requestNo__artist__artistName')
-    } else if (order_by == '-song__contents_name') {
+    } else if (order_by === '-song__contents_name') {
       // 降順で並び替え（総合点）
       score_list = handleSortByDescend(score_list, 'requestNo__contentsName')
     }
@@ -199,7 +194,7 @@ const ScoreList = () => {
     setScoreList(score_list)
     // 検索処理完了
     setFilteredScoreList(true)
-  }, [all_score_list, artist_name, contents_name, by_song, order_by])
+  }, [denmoku, all_score_list, artist_name, contents_name, by_song, order_by, loaded_score_list])
 
   // let score: Score = {
   //   date_time: '2022/11/05 20:00:00',
@@ -246,7 +241,7 @@ const ScoreList = () => {
             <ScoreContent
               score={score}
               denmoku={denmoku}
-              isSortedTotalPoint={order_by == 'total_point' || order_by == '-total_point'}
+              isSortedTotalPoint={order_by === 'total_point' || order_by === '-total_point'}
               key={String(score.scoringDateTime)}
             />
           ))}
