@@ -2,15 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            "type": "chrome",
             "request": "launch",
-            // tasks.jsonのlabel
+            // 起動時に実行するタスク (tasks.json の label)
             "preLaunchTask": "yarn: start",
+            // Run and Debugタブに表示される設定名
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost/karaoke/",
+            // Reactを起動しているurl
+            "url": "http://localhost:3000/karaoke/",
+            // VSCodeのルートディレクトリ
             "webRoot": "${workspaceFolder}",
             "sourceMaps": true,
             "sourceMapPathOverrides": {
+                // ./src配下にソースコードを記載しているため
                 "webpack:///./*": "${webRoot}/src/*"
             }
         }
