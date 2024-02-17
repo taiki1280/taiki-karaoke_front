@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			// package.jsonで設定しているコマンド
+			"command": "yarn start",
+			// launch.jsonで使用
+			"label": "yarn: start",
+			"detail": "react-scripts start",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "custom",
+				"pattern": {
+					"regexp": "ˆ$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Compiling...",
+					"endsPattern": "Compiled .*"
+				}
+			}
+		}
+	]
+}

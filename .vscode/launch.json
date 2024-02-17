@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "request": "launch",
+            // tasks.jsonのlabel
+            "preLaunchTask": "yarn: start",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost/karaoke/",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/src/*"
+            }
+        }
+    ]
+}

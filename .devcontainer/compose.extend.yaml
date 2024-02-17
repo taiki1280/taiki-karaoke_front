@@ -23,5 +23,8 @@ services:
     #   - seccomp:unconfined
 
     # Overrides default command so things don't shut down after the process ends.
-    # オーバーライドすると yarn start が動かなくなるのでオーバーライドしない
-    # command: /bin/sh -c "while sleep 1000; do :; done"
+    # 手動でデバッグする場合、オーバーライドして起動状態のみにしておく
+    command: /bin/bash -c "while sleep 1000; do :; done"
+    # 継承元 compose.yaml にて 3000 -> 80 としているので 80を見れば特にポートフォワード不要
+    # ports:
+    #   - 3000:3000
