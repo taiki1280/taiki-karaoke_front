@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/node/Dockerfile.prod
-    container_name: "taiki-karaoke"
+    container_name: "karaoke"
     environment:
       VIRTUAL_HOST: 'taiki-web.ninsan.mydns.jp'
       restart: always
@@ -11,4 +11,4 @@ services:
 networks:
   default:
     external: true
-    name: sample-network
+    name: taiki-network

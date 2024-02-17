@@ -3,7 +3,7 @@
 ## 初期設定
 
 ```bash
-docker compose run --rm node sh -c "yarn global add create-react-app && create-react-app taiki-karaoke --template typescript"
+docker compose run --rm node sh -c "yarn global add create-react-app && create-react-app karaoke --template typescript"
 ```
 
 コンテナ内に入って行ったこと
@@ -16,5 +16,5 @@ yarn tailwindcss init -p
 ## 別のPCから初めてコンテナ起動した場合
 
 ```bash
-docker compose run --rm node sh -c "cd taiki-karaoke && yarn"
+docker compose run --rm node sh -c "yarn global add create-react-app"
 ```

@@ -8,7 +8,7 @@ import { NotFound } from './score/pages/NotFound'
 
 const App = () => {
   return (
-    <BrowserRouter basename='/taiki-karaoke/'>
+    <BrowserRouter basename='/karaoke/'>
       <Header />
       <Nav />
       <main className='p-4'>
