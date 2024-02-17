@@ -1,4 +1,4 @@
-FROM node:18.12-alpine
+FROM node:latest
 WORKDIR /karaoke
 COPY ./package.json ./
 RUN yarn global add create-react-app \
