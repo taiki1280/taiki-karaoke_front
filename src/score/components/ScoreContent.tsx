@@ -13,13 +13,22 @@ interface Score {
   requestNo__contentsName: String
 }
 
-const ScoreContent = (props: { score: Score }) => {
-  const total_point: String = (Number(props.score.totalPoints) / 1000).toFixed(3)
+const ScoreContent = (props: { score: Score; denmoku: String; isSortedTotalPoint: Boolean }) => {
+  let total_point: String = (Number(props.score.totalPoints) / 1000).toFixed(3)
   // 素点を計算（現状、Aiボーナス点は計算内にしか使用されていない）
-  const point: String = (
+  let point: String = (
     (Number(props.score.totalPoints) - Number(props.score.aiSensitivityBonus || props.score.bonusPoint)) /
     1000
   ).toFixed(3)
+
+  if (props.isSortedTotalPoint) {
+    // ソート順が総合点（昇順） or 総合点（降順）であった場合、
+    // 総合点と素点の中身を入れ替えて表示する
+    let tmp = total_point
+    total_point = point
+    point = '（総）' + tmp
+  }
+
   return (
     <div className='py-2 border-b-2'>
       <time className='date_time px-4 text-xs'>{props.score.scoringDateTime}</time>

@@ -1,5 +1,7 @@
 FROM node:latest
-WORKDIR /karaoke
+
+USER node
+WORKDIR /home/node/karaoke
 COPY ./package.json ./
 RUN yarn global add create-react-app \
     && yarn install
