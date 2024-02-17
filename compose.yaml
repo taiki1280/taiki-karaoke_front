@@ -1,9 +1,9 @@
 services:
-  app:
+  front:
     build:
       context: .
       dockerfile: ./docker/node/Dockerfile
-    container_name: 'karaoke_front'
+    container_name: 'karaoke-front'
     volumes:
       - ./:/karaoke:cached
       - node_modules:/karaoke/node_modules
