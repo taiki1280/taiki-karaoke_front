@@ -53,7 +53,21 @@
 						"statusBar.background": "#3C873A",
 						"statusBar.foreground": "#303030"
 					}
-				}
+				},
+				"cSpell.words": [
+					"devcontainer",
+					"humao",
+					"Gruntfuggly",
+					"esbenp",
+					"TTFB",
+					"precache",
+					"precached",
+					"precaching",
+					"denmoku",
+					"kobushi",
+					"shakuri",
+					"longtone"
+				]
 			}
 		}
 	},
