@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/node/Dockerfile.prod
-    container_name: "karaoke"
+    container_name: "karaoke_front"
     environment:
       VIRTUAL_HOST: 'taiki-web.ninsan.mydns.jp'
       restart: always
