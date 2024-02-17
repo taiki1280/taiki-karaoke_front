@@ -31,12 +31,18 @@
 				"mhutchie.git-graph",
 				"humao.rest-client",
 				"Gruntfuggly.todo-tree",
-				"streetsidesoftware.code-spell-checker"
+				"streetsidesoftware.code-spell-checker",
+				"esbenp.prettier-vscode"
 			],
 			"settings": {
 				// "terminal.integrated.shell.linux": "/bin/zsh"
 				"files.autoSave": "afterDelay",
+				"editor.formatOnSave": true,
 				"editor.formatOnPaste": true,
+				"prettier.jsxSingleQuote": true,
+				"prettier.printWidth": 120,
+				"prettier.semi": false,
+				"prettier.singleQuote": true,
 				"editor.tabSize": 4,
 				"workbench.colorCustomizations": {
 					"[Default Dark+]": {
