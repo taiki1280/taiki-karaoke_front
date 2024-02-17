@@ -148,8 +148,8 @@ const ScoreList = () => {
     } else if (by_song === 'min_point' && bonus_point_name !== '') {
       // 昇順で並び替え（素点）
       score_list = handleSortPointByAscend(score_list, 'totalPoints', bonus_point_name)
-    } else if (by_song === 'min_point') {
-      // 昇順で並び替え（素点）
+    } else if (by_song === 'min_total_point') {
+      // 昇順で並び替え（総合点）
       score_list = handleSortByAscend(score_list, 'totalPoints')
     }
 
