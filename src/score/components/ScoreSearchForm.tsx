@@ -117,7 +117,7 @@ function ScoreSearchForm(props: any) {
     //   .catch(e => {
     //     throw new Error(e)
     //   })
-  }, [denmoku, artist_name, contents_name, by_song, order_by])
+  }, [artist_name, by_song, contents_name, denmoku, order_by, props])
 
   return (
     <>
