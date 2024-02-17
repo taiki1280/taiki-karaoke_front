@@ -3,16 +3,15 @@ services:
     build:
       context: .
       dockerfile: ./docker/node/Dockerfile
-    container_name: "karaoke_front"
+    container_name: 'karaoke_front'
     volumes:
       - ./:/karaoke:cached
       - karaoke_front-node_modules:/karaoke/node_modules
     command: yarn start
     ports:
-      - "3000:3000"
+      - '3000:3000'
 volumes:
   karaoke_front-node_modules:
-
 
 networks:
   default:
