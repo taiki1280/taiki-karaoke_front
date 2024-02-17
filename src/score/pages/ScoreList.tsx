@@ -14,8 +14,8 @@ interface Score {
 function handleFilterVal(all_score_list: Score[], artist_name: string): Score[] {
   // JavaScriptのfilter()メソッドで絞り込み、絞り込んだ配列をline変数に格納
   const line = all_score_list.filter((item) => (
-    // idまたはnameにキーワードが含まれていればtrueを返す
-    item['requestNo__artist__artistName'] == artist_name
+    // アーティスト名が含まれている場合、true
+    item.requestNo__artist__artistName.toLowerCase().indexOf(artist_name) >= 0
   ));
   return line
 }
