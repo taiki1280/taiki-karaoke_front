@@ -69,7 +69,7 @@ const ScoreList = () => {
               }
             }
           ).filter(score => score)
-          // fileterでundefinedを削除
+          // filterでundefinedを削除
 
           // 昇順で並び替え（点数）
           score_list = handleSortByAscend(score_list, 'totalPoints')
