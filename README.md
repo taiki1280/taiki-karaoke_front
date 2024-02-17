@@ -13,7 +13,7 @@ yarn add -D tailwindcss postcss autoprefixer cssnano
 yarn tailwindcss init -p
 ```
 
-## 別のPCから初めてコンテナ起動した場合
+## 別の PC から初めてコンテナ起動した場合
 
 ```bash
 docker compose run --rm node sh -c "yarn global add create-react-app"

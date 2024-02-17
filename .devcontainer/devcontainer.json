@@ -27,7 +27,6 @@
                 "esbenp.prettier-vscode"
             ],
             "settings": {
-                // "terminal.integrated.shell.linux": "/bin/zsh"
                 "files.autoSave": "afterDelay",
                 "editor.formatOnSave": true,
                 "editor.formatOnPaste": true,
@@ -44,22 +43,28 @@
                     "titleBar.activeForeground": "#303030",
                     "statusBar.background": "#3C873A",
                     "statusBar.foreground": "#303030"
-                }
-            },
-            "cSpell.words": [
-                "devcontainer",
-                "humao",
-                "Gruntfuggly",
-                "esbenp",
-                "TTFB",
-                "precache",
-                "precached",
-                "precaching",
-                "denmoku",
-                "kobushi",
-                "shakuri",
-                "longtone"
-            ]
+                },
+                "cSpell.words": [
+                    "devcontainer",
+                    "devcontainers",
+                    // extension creator's name
+                    "mhutchie",
+                    "humao",
+                    "Gruntfuggly",
+                    "esbenp",
+                    "TTFB",
+                    // application developer name
+                    "taiki",
+                    // application specific words
+                    "precache",
+                    "precached",
+                    "precaching",
+                    "denmoku",
+                    "kobushi",
+                    "shakuri",
+                    "longtone"
+                ]
+            }
         }
     }
     // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
