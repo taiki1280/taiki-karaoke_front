@@ -3,30 +3,84 @@ import axios from 'axios'
 import ScoreContent from '../components/ScoreContent'
 import ScoreSearchForm from '../components/ScoreSearchForm'
 
+interface Score {
+  totalPoints: string
+  scoringDateTime: string
+  aiSensitivityBonus: string
+  requestNo__artist__artistName: string
+  requestNo__contentsName: string
+}
+
+function handleFilterVal(all_score_list: Score[], artist_name: string): Score[] {
+  // JavaScriptのfilter()メソッドで絞り込み、絞り込んだ配列をline変数に格納
+  const line = all_score_list.filter((item) => (
+    // idまたはnameにキーワードが含まれていればtrueを返す
+    item['requestNo__artist__artistName'] == artist_name
+  ));
+  return line
+}
+
+// 昇順で並び替えるメソッドを定義
+function handleSortByAscend(score_list: Score[], sort_key_name: string): Score[] {
+  const line: Score[] = score_list.sort((a: any, b: any) => {
+    if (a[sort_key_name] < b[sort_key_name]) return -1;
+    if (a[sort_key_name] > b[sort_key_name]) return 1;
+    return 0;
+  });
+  return line;
+}
+
+// 昇順で並び替えるメソッドを定義
+function handleSortByDescend(score_list: Score[], sort_key_name: string) {
+  const line = score_list.sort((a: any, b: any) => {
+    if (a[sort_key_name] < b[sort_key_name]) return 1;
+    if (a[sort_key_name] > b[sort_key_name]) return -1;
+    return 0;
+  });
+  return line;
+}
+
 const ScoreList = () => {
 
-  const [loaded_score_list, setLoadedScoreList] = useState(false)
-  const [score_list, setScoreList] = useState([])
+  const [loaded_score_list, setLoadedScoreList] = useState<Boolean>(false)
+  const [all_score_list, setAllScoreList] = useState<Score[]>([])
+  const [score_list, setScoreList] = useState<Score[]>([])
 
   useEffect(() => {
     if (process.env.REACT_APP_DJANGO_APP_API_URL !== undefined)
       axios.get(process.env.REACT_APP_DJANGO_APP_API_URL)
         .then(res => {
-          setScoreList(res.data)
+          let all_score_list: [] = res.data
+          setAllScoreList(all_score_list)
+
+          let score_list: Score[] = handleFilterVal(all_score_list, 'ヨルシカ')
+          // 降順で並び替え（点数）
+          score_list = handleSortByDescend(score_list, 'totalPoints')
+
+          // 重複削除（最高点以外削除）
+          let duplicate_song_list: String[] = []
+          score_list = score_list.map<Score>(
+            (score: any) => {
+              if (duplicate_song_list.includes(score['requestNo__contentsName']))
+                return;
+              if (score['requestNo__contentsName'] != undefined) {
+                duplicate_song_list.push(score['requestNo__contentsName'])
+                return score;
+              }
+            }
+          ).filter(score => score)
+          // fileterでundefinedを削除
+
+          // 昇順で並び替え（点数）
+          score_list = handleSortByAscend(score_list, 'totalPoints')
+
+          console.log(score_list)
+          setScoreList(score_list)
           setLoadedScoreList(true)
-          console.log(res.data)
         })
     else
       console.log('環境変数にDjangoアプリのURLを設定してください')
   }, [])
-
-  type Score = {
-    totalPoints: String
-    scoringDateTime: String
-    aiSensitivityBonus: String
-    requestNo__artist__artistName: String
-    requestNo__contentsName: String
-  }
 
   // let score: Score = {
   //   date_time: '2022/11/05 20:00:00',
