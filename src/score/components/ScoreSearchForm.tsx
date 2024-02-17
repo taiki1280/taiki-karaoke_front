@@ -51,14 +51,7 @@ function ScoreSearchForm(props: any) {
 
   let loaded = true
 
-  let artistNameList = [
-    '',
-    'ヨルシカ',
-    'Ado',
-    '森七菜',
-    'あいみょん',
-    '菅田将暉',
-  ]
+  let artistNameList = ['', 'ヨルシカ', 'Ado', '森七菜', 'あいみょん', '菅田将暉']
 
   // const [cookies, setCookie, removeCookie] = useCookies();
   // if (Object.keys(cookies).length !== 0) {
@@ -114,20 +107,17 @@ function ScoreSearchForm(props: any) {
     <>
       {loaded ? (
         <>
-          <div className="flex justify-end">
-            <button
-              className="bg-red-600 p-1 border-2 rounded-lg"
-              onClick={deleteCookie}
-            >
+          <div className='flex justify-end'>
+            <button className='bg-red-600 p-1 border-2 rounded-lg' onClick={deleteCookie}>
               検索履歴削除
             </button>
           </div>
-          <div className="p-1">
+          <div className='p-1'>
             デンモク
             <select
-              className="bg-black w-full p-1 border-2 rounded-md"
-              name="denmoku"
-              id="denmoku"
+              className='bg-black w-full p-1 border-2 rounded-md'
+              name='denmoku'
+              id='denmoku'
               onChange={(event) => selectedDenmokuChange(event.target.value)}
               defaultValue={denmoku}
             >
@@ -138,12 +128,12 @@ function ScoreSearchForm(props: any) {
               ))}
             </select>
           </div>
-          <div className="p-1">
+          <div className='p-1'>
             アーティスト名
             <select
-              className="bg-black w-full p-1 border-2 rounded-md"
-              name="artist_name"
-              id="artist_name"
+              className='bg-black w-full p-1 border-2 rounded-md'
+              name='artist_name'
+              id='artist_name'
               onChange={(event) => selectedArtistNameChange(event.target.value)}
               defaultValue={artist_name}
             >
@@ -154,23 +144,23 @@ function ScoreSearchForm(props: any) {
               ))}
             </select>
           </div>
-          <div className="p-1">
+          <div className='p-1'>
             曲名
             <input
-              className="bg-black w-full p-1 border-2 rounded-md"
-              type="text"
-              name="contents_name"
-              id="contents_name"
+              className='bg-black w-full p-1 border-2 rounded-md'
+              type='text'
+              name='contents_name'
+              id='contents_name'
               onChange={(event) => inputSongNameChange(event.target.value)}
               defaultValue={contents_name}
             />
           </div>
-          <div className="p-1">
+          <div className='p-1'>
             重複曲絞り込み
             <select
-              className="bg-black w-full p-1 border-2 rounded-md"
-              name="by_song"
-              id="by_song"
+              className='bg-black w-full p-1 border-2 rounded-md'
+              name='by_song'
+              id='by_song'
               onChange={(event) => selectedBySongChange(event.target.value)}
               defaultValue={by_song}
             >
@@ -181,12 +171,12 @@ function ScoreSearchForm(props: any) {
               ))}
             </select>
           </div>
-          <div className="p-1">
+          <div className='p-1'>
             ソート順
             <select
-              className="bg-black w-full p-1 border-2 rounded-md"
-              name="order_by"
-              id="order_by"
+              className='bg-black w-full p-1 border-2 rounded-md'
+              name='order_by'
+              id='order_by'
               onChange={(event) => selectedOrderByChange(event.target.value)}
               defaultValue={order_by}
             >
@@ -201,9 +191,7 @@ function ScoreSearchForm(props: any) {
       ) : (
         <div>
           {/* <h1 className='text-base text-center font-semibold p-4'>Now Loading...</h1> */}
-          <h1 className="text-base text-center font-semibold p-4">
-            検索フォーム開発中
-          </h1>
+          <h1 className='text-base text-center font-semibold p-4'>検索フォーム開発中</h1>
         </div>
       )}
     </>

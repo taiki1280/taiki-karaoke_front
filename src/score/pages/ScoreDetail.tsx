@@ -1,34 +1,33 @@
 interface ScoreDetail {
-  radar_chart_pitch: Number,
-  radar_chart_expressive: Number,
+  radar_chart_pitch: Number
+  radar_chart_expressive: Number
   song: {
-    artist_name: String,
+    artist_name: String
     contents_name: String
   }
-  ,
-  total_point: Number,
-  point: Number,
-  bonus_type: String,
-  bonus_point: Number,
-  national_average_total_points: Number,
-  last_total_points: String,
+  total_point: Number
+  point: Number
+  bonus_type: String
+  bonus_point: Number
+  national_average_total_points: Number
+  last_total_points: String
   analysis_report_comment: {
     comment: String
-  },
-  intonation: Number,
-  shakuri_count: Number,
-  kobushi_count: Number,
-  fall_count: Number,
-  longtone_skill: String,
-  radar_chart_stability: Number,
-  timing: Number,
-  vibrato_total_second: Number,
-  vibrato_count: Number,
-  vibrato_skill: String,
-  vibrato_type: String,
-  singing_range_highest: Number,
-  singing_range_lowest: Number,
-  vocal_range_highest: Number,
+  }
+  intonation: Number
+  shakuri_count: Number
+  kobushi_count: Number
+  fall_count: Number
+  longtone_skill: String
+  radar_chart_stability: Number
+  timing: Number
+  vibrato_total_second: Number
+  vibrato_count: Number
+  vibrato_skill: String
+  vibrato_type: String
+  singing_range_highest: Number
+  singing_range_lowest: Number
+  vocal_range_highest: Number
   vocal_range_lowest: Number
 }
 
@@ -40,7 +39,7 @@ const ScoreDetail = (): JSX.Element => {
     radar_chart_expressive: Math.floor(Math.random() * 10),
     song: {
       artist_name: 'artist_name',
-      contents_name: 'contents_name'
+      contents_name: 'contents_name',
     },
     total_point: Math.floor(Math.random() * 1000),
     point: Math.floor(Math.random() * 1000),
@@ -49,7 +48,7 @@ const ScoreDetail = (): JSX.Element => {
     national_average_total_points: Math.floor(Math.random() * 1000),
     last_total_points: '',
     analysis_report_comment: {
-      comment: 'コメント'
+      comment: 'コメント',
     },
     intonation: Math.floor(Math.random() * 10),
     shakuri_count: Math.floor(Math.random() * 10),
@@ -69,9 +68,9 @@ const ScoreDetail = (): JSX.Element => {
   }
   return (
     <>
-      {loading ?
+      {loading ? (
         <h1>loading....</h1>
-        :
+      ) : (
         <>
           <div>
             <p>音程・表現力グラフ</p>
@@ -82,9 +81,7 @@ const ScoreDetail = (): JSX.Element => {
             </div> */}
           </div>
           <p>表現力チャート</p>
-          <div className='flex justify-around'>
-            {/* <ExpressionRadarChart data={detail}></ExpressionRadarChart> */}
-          </div>
+          <div className='flex justify-around'>{/* <ExpressionRadarChart data={detail}></ExpressionRadarChart> */}</div>
           <div>
             <p>アーティスト名：{detail.song.artist_name}</p>
             <p>曲名：{detail.song.contents_name}</p>
@@ -117,7 +114,6 @@ const ScoreDetail = (): JSX.Element => {
             <hr />
           </div>
 
-
           {/* <h1 className='text-3xl py-2'>Songテーブル</h1>
           <div className='ml-4'>
             {get_table_data(detail.song)}
@@ -131,7 +127,7 @@ const ScoreDetail = (): JSX.Element => {
             {get_table_data(detail)}
           </div> */}
         </>
-      }
+      )}
     </>
   )
 }
