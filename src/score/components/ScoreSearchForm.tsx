@@ -51,7 +51,15 @@ function ScoreSearchForm(props: any) {
 
   let loaded = true
 
-  let artistNameList = ['', 'ヨルシカ', 'Ado', '森七菜', 'あいみょん', '菅田将暉']
+  let artistNameList = [
+    '',
+    'ヨルシカ',
+    'YOASOBI',
+    'Ado',
+    '森七菜',
+    'あいみょん',
+    '菅田将暉',
+  ]
 
   // const [cookies, setCookie, removeCookie] = useCookies();
   // if (Object.keys(cookies).length !== 0) {
