@@ -28,7 +28,7 @@ function handleFilterArtist(all_score_list: Score[], artist_name: string): Score
   const line = all_score_list.filter(
     (item) =>
       // アーティスト名が含まれている場合、true
-      item.requestNo__artist__artistName.toLowerCase().indexOf(artist_name.toLowerCase()) >= 0
+      item.requestNo__artist__artistName.toLowerCase().indexOf(artist_name.toLowerCase()) >= 0,
   )
   return line
 }
@@ -39,7 +39,7 @@ function handleFilterSong(score_list: Score[], song_name: string): Score[] {
   const line = score_list.filter(
     (item) =>
       // アーティスト名が含まれている場合、true
-      item.requestNo__contentsName.toLowerCase().indexOf(song_name.toLowerCase()) >= 0
+      item.requestNo__contentsName.toLowerCase().indexOf(song_name.toLowerCase()) >= 0,
   )
   return line
 }
@@ -96,6 +96,7 @@ function handleDeleteDuplicateByContentsName(score_list: Score[]) {
 }
 
 const ScoreList = () => {
+  const [connectedApi, setConnectedApi] = useState<Boolean>(false)
   const [loaded_score_list, setLoadedScoreList] = useState<Boolean>(false)
   const [filtered_score_list, setFilteredScoreList] = useState<Boolean>(false)
   const [all_score_list, setAllScoreList] = useState<Score[]>([])
@@ -109,12 +110,15 @@ const ScoreList = () => {
   const [order_by, selectedOrderByChange] = useState<string>('point')
 
   useEffect(() => {
-    const django_url = process.env.REACT_APP_DJANGO_APP_API_URL ?? null
-    if (django_url === null) console.log('環境変数にDjangoアプリのURLを設定してください')
+    const DJANGO__URL = process.env.REACT_APP_DJANGO_APP_API_URL ?? null
+    if (DJANGO__URL === null) {
+      return
+    }
 
-    axios.get(django_url + denmoku + '/').then((res) => {
+    axios.get(DJANGO__URL + denmoku + '/').then((res) => {
       // APIからデータ取得
       console.log('API取得データ')
+      setConnectedApi(true)
       setAllScoreList(res.data)
     })
     setLoadedScoreList(true)
@@ -220,13 +224,18 @@ const ScoreList = () => {
   //   copy_score.total_point = Math.random() * 100
   //   score_list.push(copy_score)
   // }
-  let message = ''
-  if (!loaded_score_list) message = '取得'
-  else if (!filtered_score_list) message = '調整'
+  let message: string = ''
+  if (!connectedApi) {
+    message = 'API 環境変数に値を設定をしてください。'
+  } else if (!loaded_score_list) {
+    message = 'API からデータ取得中です。'
+  } else if (!filtered_score_list) {
+    message = 'API から取得後、データを加工中です。'
+  }
 
   return (
     <>
-      {loaded_score_list && filtered_score_list ? (
+      {connectedApi && loaded_score_list && filtered_score_list ? (
         <>
           <ScoreSearchForm
             selectedDenmokuChange={selectedDenmokuChange}
@@ -247,10 +256,10 @@ const ScoreList = () => {
           ))}
         </>
       ) : (
-        <div>
+        <>
           <h1 className='text-5xl text-center font-semibold p-10'>Now Loading...</h1>
-          <h1 className='text-5xl text-center font-semibold p-10'>{message}中だよ～</h1>
-        </div>
+          <h1 className='text-5xl text-center font-semibold p-10'>{message}</h1>
+        </>
       )}
     </>
   )
