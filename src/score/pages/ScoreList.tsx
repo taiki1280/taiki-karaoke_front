@@ -14,16 +14,8 @@ interface Score {
   requestNo__contentsName: string
 }
 
-interface SearchValues {
-  denmoku: string
-  artistName: string
-  contentsName: string
-  bySong: string
-  orderBy: string
-}
-
 // アーティスト名で絞り込みするメソッド
-function handleFilterArtist(allScoreList: Score[], artistName: string): Score[] {
+function handleFilterScoreListByArtist(allScoreList: Score[], artistName: string): Score[] {
   // JavaScriptのfilter()メソッドで絞り込み、絞り込んだ配列をline変数に格納
   const line = allScoreList.filter(
     (item) =>
@@ -110,10 +102,11 @@ const ScoreList = () => {
   const [orderBy, selectedOrderByChange] = useState<string>('point')
 
   useEffect(() => {
+    // 取得済の場合、実行しない
+    if (loadedScoreList) return
+
     const DJANGO__URL = process.env.REACT_APP_DJANGO_APP_API_URL ?? null
-    if (DJANGO__URL === null) {
-      return
-    }
+    if (DJANGO__URL === null) return
 
     axios.get(DJANGO__URL + denmoku + '/').then((res) => {
       // APIからデータ取得
@@ -122,12 +115,13 @@ const ScoreList = () => {
       setAllScoreList(res.data)
     })
     setLoadedScoreList(true)
-  }, [denmoku])
+  }, [loadedScoreList, denmoku])
 
   useEffect(() => {
     if (!loadedScoreList) return
 
-    let scoreList: Score[] = handleFilterArtist(allScoreList, artistName)
+    console.log('スコアデータ更新')
+    let scoreList: Score[] = handleFilterScoreListByArtist(allScoreList, artistName)
     if (contentsName !== '') {
       scoreList = handleFilterSong(scoreList, contentsName)
     }
@@ -197,32 +191,8 @@ const ScoreList = () => {
     setScoreList(scoreList)
     // 検索処理完了
     setFilteredScoreList(true)
-  }, [denmoku, allScoreList, artistName, contentsName, bySong, orderBy, loadedScoreList])
+  }, [loadedScoreList, denmoku, allScoreList, artistName, contentsName, bySong, orderBy])
 
-  // let score: Score = {
-  //   date_time: '2022/11/05 20:00:00',
-  //   point: 10,
-  //   total_point: 15,
-  //   id: 1,
-  //   song: {
-  //     d_artistName: 'dummy_artist_name',
-  //     d_contents_name: 'dummy_contents_name'
-  //   }
-  // }
-
-  // var scoreList: Score[] = []
-
-  // for (let i = 1; i <= Math.floor(Math.random() * 10000); i++) {
-  //   let copy_score = Object.assign({}, score)
-  //   let copy_song = Object.assign({}, score.song)
-  //   copy_song.d_artistName += String(Math.floor(Math.random() * 100))
-  //   copy_song.d_contents_name += String(Math.floor(Math.random() * 100))
-  //   copy_score.song = copy_song
-  //   copy_score.id = i
-  //   copy_score.point = Math.random() * 100
-  //   copy_score.total_point = Math.random() * 100
-  //   scoreList.push(copy_score)
-  // }
   let message: string = ''
   if (!connectedApi) {
     message = 'API 環境変数に値を設定をしてください。'

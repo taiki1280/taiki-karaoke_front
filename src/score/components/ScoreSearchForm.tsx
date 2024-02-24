@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-// import { getScore, getArtistNameList } from '../api/getScore'
-// import { useCookies } from 'react-cookie';
+import axios from 'axios'
 
 interface SearchValues {
   denmoku: string
@@ -13,11 +12,11 @@ interface SearchValues {
 // TODO: Stateメソッドのタイプを調べる
 function ScoreSearchForm(props: any) {
   const searchValues: SearchValues = {
-    denmoku: localStorage.getItem('denmoku') ?? 'ai',
-    artist_name: localStorage.getItem('artist_name') ?? 'ヨルシカ',
+    denmoku: localStorage.getItem('denmoku') ?? '',
+    artist_name: localStorage.getItem('artist_name') ?? '',
     contents_name: localStorage.getItem('contents_name') ?? '',
-    by_song: localStorage.getItem('by_song') ?? 'max_point',
-    order_by: localStorage.getItem('order_by') ?? 'point',
+    by_song: localStorage.getItem('by_song') ?? '',
+    order_by: localStorage.getItem('order_by') ?? '',
   }
 
   const denmokuList = [
@@ -46,27 +45,8 @@ function ScoreSearchForm(props: any) {
     { value: 'song__contents_name', label: '曲名（昇順）' },
     { value: '-song__contents_name', label: '曲名（降順）' },
   ]
-
-  const [loaded, setLoaded] = useState<Boolean>(false)
-  // setLoaded(true)
-  // const [score, setScore] = useState()
-  const [artistNameList, setArtistNameList] = useState<string[]>([
-    '',
-    'ヨルシカ',
-    'suis from ヨルシカ',
-    'YOASOBI',
-    'Ado',
-    '森七菜',
-    'あいみょん',
-    '菅田将暉',
-    '優里',
-    '幾田りら',
-    '雨宮天',
-    '家入レオ',
-    '米津玄師',
-    'Mrs. GREEN APPLE',
-    'やなぎなぎ',
-  ])
+  const [loadedArtistNameList, setLoadedArtistNameList] = useState<Boolean>(false)
+  const [artistNameList, setArtistNameList] = useState<string[]>([])
 
   const handleDeleteLocalStorage = () => {
     localStorage.clear()
@@ -74,33 +54,29 @@ function ScoreSearchForm(props: any) {
   }
 
   useEffect(() => {
-    // setArtistNameList()
-    setLoaded(true)
-    // 親のStateを同様に変更
-    // getArtistNameList()
-    //   .then(d => {
-    //     let artistNameList = d
-    //     console.log(d)
-    //     artistNameList.unshift('未選択')
-    //     setArtistNameList(d)
-    //   })
-    //   .catch(e => {
-    //     throw new Error(e)
-    //   })
-    // getScore(search_value_dict)
-    //   .then(d => {
-    //     setScore(d)
-    //     // Loading完了
-    //     setLoaded(false)
-    //   })
-    //   .catch(e => {
-    //     throw new Error(e)
-    //   })
-  }, [props])
+    // 取得済の場合、実行しない
+    if (loadedArtistNameList) return
+
+    const DJANGO__URL = process.env.REACT_APP_DJANGO_APP_API_URL ?? null
+    if (DJANGO__URL === null) return
+
+    axios.get(DJANGO__URL + 'artist/').then((res) => {
+      // APIからデータ取得
+      let artistNameList: string[] = res.data.map((d: any) => d.artistName)
+      artistNameList = ['未選択', 'ヨルシカ', 'suis from ヨルシカ', 'ヨルシカメドレー', 'YOASOBI'].concat(
+        artistNameList,
+      )
+      artistNameList = Array.from(new Set(artistNameList))
+      console.log('アーティスト一覧')
+      console.log(artistNameList)
+      setArtistNameList(artistNameList)
+      setLoadedArtistNameList(true)
+    })
+  }, [loadedArtistNameList])
 
   return (
     <>
-      {loaded ? (
+      {loadedArtistNameList ? (
         <form>
           <div className='flex justify-end'>
             <button className='bg-red-600 p-1 border-2 rounded-lg' onClick={handleDeleteLocalStorage}>
@@ -138,7 +114,7 @@ function ScoreSearchForm(props: any) {
               }}
               defaultValue={searchValues.artist_name}
             >
-              {artistNameList.map((d, i) => (
+              {artistNameList.map((d: string, i: number) => (
                 <option key={i} value={d !== '未選択' ? d : ''}>
                   {d}
                 </option>
