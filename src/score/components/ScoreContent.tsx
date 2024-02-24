@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 interface Score {
   // id: Number,
@@ -12,7 +12,7 @@ interface Score {
   requestNo__contentsName: String
 }
 
-const ScoreContent = (props: { score: Score; denmoku: String; isSortedTotalPoint: Boolean }) => {
+const ScoreContent = (props: {score: Score; denmoku: String; isSortedTotalPoint: Boolean}) => {
   let total_point: String = (Number(props.score.totalPoints) / 1000).toFixed(3)
   // 素点を計算（現状、Aiボーナス点は計算内にしか使用されていない）
   let point: String = (

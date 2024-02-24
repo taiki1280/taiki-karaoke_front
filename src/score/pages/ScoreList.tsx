@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
 import ScoreContent from '../components/ScoreContent'
 import ScoreSearchForm from '../components/ScoreSearchForm'

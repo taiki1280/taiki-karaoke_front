@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
 
 interface SearchValues {
@@ -20,30 +20,30 @@ function ScoreSearchForm(props: any) {
   }
 
   const denmokuList = [
-    { value: 'ai', label: '精密採点 AI' },
-    { value: 'dxg', label: '精密採点 DX-G' },
+    {value: 'ai', label: '精密採点 AI'},
+    {value: 'dxg', label: '精密採点 DX-G'},
     // { value: 'dx', label: '精密採点 DX' },
   ]
 
   const bySongList = [
-    { value: '', label: '未選択' },
-    { value: 'max_point', label: '素点（自己ベスト）' },
-    { value: 'min_point', label: '素点（自己ワースト）' },
-    { value: 'max_total_point', label: '総合点（自己ベスト）' },
-    { value: 'min_total_point', label: '総合点（自己ワースト）' },
+    {value: '', label: '未選択'},
+    {value: 'max_point', label: '素点（自己ベスト）'},
+    {value: 'min_point', label: '素点（自己ワースト）'},
+    {value: 'max_total_point', label: '総合点（自己ベスト）'},
+    {value: 'min_total_point', label: '総合点（自己ワースト）'},
   ]
 
   const orderByList = [
-    { value: 'date_time', label: '日付（昇順）' },
-    { value: '-date_time', label: '日付（降順）' },
-    { value: 'point', label: '素点（昇順）' },
-    { value: '-point', label: '素点（降順）' },
-    { value: 'total_point', label: '総合点（昇順）' },
-    { value: '-total_point', label: '総合点（降順）' },
-    { value: 'song__artist_name', label: 'アーティスト名（昇順）' },
-    { value: '-song__artist_name', label: 'アーティスト名（降順）' },
-    { value: 'song__contents_name', label: '曲名（昇順）' },
-    { value: '-song__contents_name', label: '曲名（降順）' },
+    {value: 'date_time', label: '日付（昇順）'},
+    {value: '-date_time', label: '日付（降順）'},
+    {value: 'point', label: '素点（昇順）'},
+    {value: '-point', label: '素点（降順）'},
+    {value: 'total_point', label: '総合点（昇順）'},
+    {value: '-total_point', label: '総合点（降順）'},
+    {value: 'song__artist_name', label: 'アーティスト名（昇順）'},
+    {value: '-song__artist_name', label: 'アーティスト名（降順）'},
+    {value: 'song__contents_name', label: '曲名（昇順）'},
+    {value: '-song__contents_name', label: '曲名（降順）'},
   ]
   const [loadedArtistNameList, setLoadedArtistNameList] = useState<Boolean>(false)
   const [artistNameList, setArtistNameList] = useState<string[]>([])
@@ -79,7 +79,10 @@ function ScoreSearchForm(props: any) {
       {loadedArtistNameList ? (
         <form>
           <div className='flex justify-end'>
-            <button className='bg-red-600 p-1 border-2 rounded-lg' onClick={handleDeleteLocalStorage}>
+            <button
+              className='bg-red-600 p-1 border-2 rounded-lg'
+              onClick={handleDeleteLocalStorage}
+            >
               検索履歴削除
             </button>
           </div>
@@ -96,7 +99,10 @@ function ScoreSearchForm(props: any) {
               defaultValue={searchValues.denmoku}
             >
               {denmokuList.map((d, i) => (
-                <option key={i} value={d.value}>
+                <option
+                  key={i}
+                  value={d.value}
+                >
                   {d.label}
                 </option>
               ))}
@@ -115,7 +121,10 @@ function ScoreSearchForm(props: any) {
               defaultValue={searchValues.artist_name}
             >
               {artistNameList.map((d: string, i: number) => (
-                <option key={i} value={d !== '未選択' ? d : ''}>
+                <option
+                  key={i}
+                  value={d !== '未選択' ? d : ''}
+                >
                   {d}
                 </option>
               ))}
@@ -149,7 +158,10 @@ function ScoreSearchForm(props: any) {
               defaultValue={searchValues.by_song}
             >
               {bySongList.map((d, i) => (
-                <option key={i} value={d.value}>
+                <option
+                  key={i}
+                  value={d.value}
+                >
                   {d.label}
                 </option>
               ))}
@@ -168,7 +180,10 @@ function ScoreSearchForm(props: any) {
               defaultValue={searchValues.order_by}
             >
               {orderByList.map((d, i) => (
-                <option key={i} value={d.value}>
+                <option
+                  key={i}
+                  value={d.value}
+                >
                   {d.label}
                 </option>
               ))}

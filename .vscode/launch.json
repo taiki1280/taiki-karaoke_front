@@ -9,7 +9,7 @@
             // Run and Debugタブに表示される設定名
             "name": "Launch Chrome against localhost",
             // Reactを起動しているurl
-            "url": "http://localhost:3000/karaoke/",
+            "url": "http://localhost:3000/karaoke/score/",
             // VSCodeのルートディレクトリ
             "webRoot": "${workspaceFolder}",
             "sourceMaps": true,

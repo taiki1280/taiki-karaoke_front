@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Header from './components/Header'
 import Nav from './components/Nav'
 import Top from './Top'
 import ScoreTop from './score/pages/ScoreList'
 import ScoreDetail from './score/pages/ScoreDetail'
-import { NotFound } from './score/pages/NotFound'
+import {NotFound} from './score/pages/NotFound'
 
 const App = () => {
   return (
@@ -13,10 +13,22 @@ const App = () => {
       <Nav />
       <main className='p-4'>
         <Routes>
-          <Route index element={<Top />} />
-          <Route path='/score' element={<ScoreTop />} />
-          <Route path='/score/:id' element={<ScoreDetail />} />
-          <Route path='*' element={<NotFound />} />
+          <Route
+            index
+            element={<Top />}
+          />
+          <Route
+            path='/score'
+            element={<ScoreTop />}
+          />
+          <Route
+            path='/score/:id'
+            element={<ScoreDetail />}
+          />
+          <Route
+            path='*'
+            element={<NotFound />}
+          />
         </Routes>
       </main>
     </BrowserRouter>
