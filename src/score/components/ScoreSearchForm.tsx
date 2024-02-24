@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 // import { getScore, getArtistNameList } from '../api/getScore'
 // import { useCookies } from 'react-cookie';
 
@@ -13,18 +13,12 @@ interface SearchValues {
 // TODO: Stateメソッドのタイプを調べる
 function ScoreSearchForm(props: any) {
   const searchValues: SearchValues = {
-    denmoku: 'ai',
-    artist_name: 'ヨルシカ',
-    contents_name: '',
-    by_song: 'max_point',
-    order_by: 'point',
+    denmoku: localStorage.getItem('denmoku') ?? 'ai',
+    artist_name: localStorage.getItem('artist_name') ?? 'ヨルシカ',
+    contents_name: localStorage.getItem('contents_name') ?? '',
+    by_song: localStorage.getItem('by_song') ?? 'max_point',
+    order_by: localStorage.getItem('order_by') ?? 'point',
   }
-
-  const [denmoku, selectedDenmokuChange] = useState<string>(searchValues.denmoku)
-  const [artist_name, selectedArtistNameChange] = useState<string>(searchValues.artist_name)
-  const [contents_name, inputSongNameChange] = useState<string>(searchValues.contents_name)
-  const [by_song, selectedBySongChange] = useState<string>(searchValues.by_song)
-  const [order_by, selectedOrderByChange] = useState<string>(searchValues.order_by)
 
   const denmokuList = [
     { value: 'ai', label: '精密採点 AI' },
@@ -53,13 +47,10 @@ function ScoreSearchForm(props: any) {
     { value: '-song__contents_name', label: '曲名（降順）' },
   ]
 
-  // const [loaded, setLoaded] = useState(true)
-  const [score, setScore] = useState()
-  // const [artistNameList, setArtistNameList] = useState()
-
-  let loaded = true
-
-  let artistNameList = [
+  const [loaded, setLoaded] = useState<Boolean>(false)
+  // setLoaded(true)
+  // const [score, setScore] = useState()
+  const [artistNameList, setArtistNameList] = useState<string[]>([
     '',
     'ヨルシカ',
     'suis from ヨルシカ',
@@ -75,37 +66,17 @@ function ScoreSearchForm(props: any) {
     '米津玄師',
     'Mrs. GREEN APPLE',
     'やなぎなぎ',
-  ]
+  ])
 
-  // const [cookies, setCookie, removeCookie] = useCookies();
-  // if (Object.keys(cookies).length !== 0) {
-  //   console.log(cookies)
-  //   search_value_dict = cookies
-  // }
-
-  // const replaceScore = (search_value_dict) => {
-  //   getScore(search_value_dict)
-  //     .then(d => {
-  //       setScore(d)
-  //     })
-  //     .catch(e => {
-  //       throw new Error(e)
-  //     })
-  // }
-
-  const deleteCookie = () => {
-    // for (const value in search_value_dict)
-    //   removeCookie(value)
+  const handleDeleteLocalStorage = () => {
+    localStorage.clear()
     window.location.reload()
   }
 
   useEffect(() => {
+    // setArtistNameList()
+    setLoaded(true)
     // 親のStateを同様に変更
-    props.selectedDenmokuChange(denmoku)
-    props.selectedArtistNameChange(artist_name)
-    props.inputSongNameChange(contents_name)
-    props.selectedBySongChange(by_song)
-    props.selectedOrderByChange(order_by)
     // getArtistNameList()
     //   .then(d => {
     //     let artistNameList = d
@@ -125,14 +96,14 @@ function ScoreSearchForm(props: any) {
     //   .catch(e => {
     //     throw new Error(e)
     //   })
-  }, [artist_name, by_song, contents_name, denmoku, order_by, props])
+  }, [props])
 
   return (
     <>
       {loaded ? (
         <>
           <div className='flex justify-end'>
-            <button className='bg-red-600 p-1 border-2 rounded-lg' onClick={deleteCookie}>
+            <button className='bg-red-600 p-1 border-2 rounded-lg' onClick={handleDeleteLocalStorage}>
               検索履歴削除
             </button>
           </div>
@@ -142,8 +113,11 @@ function ScoreSearchForm(props: any) {
               className='bg-black w-full p-1 border-2 rounded-md'
               name='denmoku'
               id='denmoku'
-              onChange={(event) => selectedDenmokuChange(event.target.value)}
-              defaultValue={denmoku}
+              onChange={(event) => {
+                localStorage.setItem('denmoku', event.target.value)
+                props.selectedDenmokuChange(event.target.value)
+              }}
+              defaultValue={searchValues.denmoku}
             >
               {denmokuList.map((d, i) => (
                 <option key={i} value={d.value}>
@@ -158,8 +132,11 @@ function ScoreSearchForm(props: any) {
               className='bg-black w-full p-1 border-2 rounded-md'
               name='artist_name'
               id='artist_name'
-              onChange={(event) => selectedArtistNameChange(event.target.value)}
-              defaultValue={artist_name}
+              onChange={(event) => {
+                localStorage.setItem('artist_name', event.target.value)
+                props.selectedArtistNameChange(event.target.value)
+              }}
+              defaultValue={searchValues.artist_name}
             >
               {artistNameList.map((d, i) => (
                 <option key={i} value={d !== '未選択' ? d : ''}>
@@ -175,8 +152,12 @@ function ScoreSearchForm(props: any) {
               type='text'
               name='contents_name'
               id='contents_name'
-              onChange={(event) => inputSongNameChange(event.target.value)}
-              defaultValue={contents_name}
+              onChange={(event) => {
+                console.log(event.target.name)
+                localStorage.setItem('contents_name', event.target.value)
+                props.inputSongNameChange(event.target.value)
+              }}
+              defaultValue={searchValues.contents_name}
             />
           </div>
           <div className='p-1'>
@@ -185,8 +166,11 @@ function ScoreSearchForm(props: any) {
               className='bg-black w-full p-1 border-2 rounded-md'
               name='by_song'
               id='by_song'
-              onChange={(event) => selectedBySongChange(event.target.value)}
-              defaultValue={by_song}
+              onChange={(event) => {
+                localStorage.setItem('by_song', event.target.value)
+                props.selectedBySongChange(event.target.value)
+              }}
+              defaultValue={searchValues.by_song}
             >
               {bySongList.map((d, i) => (
                 <option key={i} value={d.value}>
@@ -201,8 +185,11 @@ function ScoreSearchForm(props: any) {
               className='bg-black w-full p-1 border-2 rounded-md'
               name='order_by'
               id='order_by'
-              onChange={(event) => selectedOrderByChange(event.target.value)}
-              defaultValue={order_by}
+              onChange={(event) => {
+                localStorage.setItem('order_by', event.target.value)
+                props.selectedOrderByChange(event.target.value)
+              }}
+              defaultValue={searchValues.order_by}
             >
               {orderByList.map((d, i) => (
                 <option key={i} value={d.value}>

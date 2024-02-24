@@ -127,10 +127,6 @@ const ScoreList = () => {
   useEffect(() => {
     if (!loadedScoreList) return
 
-    console.log('frontで検索データ更新')
-    console.log('by_song')
-    console.log(bySong)
-
     let scoreList: Score[] = handleFilterArtist(allScoreList, artistName)
     if (contentsName !== '') {
       scoreList = handleFilterSong(scoreList, contentsName)
