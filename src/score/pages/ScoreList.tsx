@@ -7,9 +7,9 @@ interface Score {
   totalPoints: string
   scoringDateTime: string
   // Ai
-  aiSensitivityBonus: String | null
+  aiSensitivityBonus: string | null
   // DX-G
-  bonusPoint: String | null
+  bonusPoint: string | null
   requestNo__artist__artistName: string
   requestNo__contentsName: string
 }
@@ -65,28 +65,28 @@ function handleSortPointByDescend(scoreList: Score[], totalPoint: string, bonus_
 }
 
 // 昇順で並び替えるメソッドを定義
-function handleSortByAscend(scoreList: Score[], sort_key_name: string): Score[] {
+function handleSortByAscend(scoreList: Score[], sortKeyName: string): Score[] {
   const line: Score[] = scoreList.sort((a: any, b: any) => {
-    if (a[sort_key_name] < b[sort_key_name]) return -1
-    if (a[sort_key_name] > b[sort_key_name]) return 1
+    if (a[sortKeyName] < b[sortKeyName]) return -1
+    if (a[sortKeyName] > b[sortKeyName]) return 1
     return 0
   })
   return line
 }
 
 // 降順で並び替えるメソッドを定義
-function handleSortByDescend(scoreList: Score[], sort_key_name: string) {
+function handleSortByDescend(scoreList: Score[], sortKeyName: string) {
   const line = scoreList.sort((a: any, b: any) => {
-    if (a[sort_key_name] < b[sort_key_name]) return 1
-    if (a[sort_key_name] > b[sort_key_name]) return -1
+    if (a[sortKeyName] < b[sortKeyName]) return 1
+    if (a[sortKeyName] > b[sortKeyName]) return -1
     return 0
   })
   return line
 }
 
-function handleDeleteDuplicateByContentsName(scoreList: Score[]) {
+function handleDeleteDuplicateByKeyName(scoreList: Score[], keyName: string) {
   const result_list: Score[] = scoreList.reduce((a: Score[], v: Score) => {
-    if (!a.some((e) => e['requestNo__contentsName'] === v['requestNo__contentsName'])) {
+    if (!a.some((e) => e[keyName as keyof typeof e] === v[keyName as keyof typeof v])) {
       a.push(v)
     }
     return a
@@ -159,8 +159,11 @@ const ScoreList = () => {
 
     if (bySong !== '') {
       // 曲名の重複を削除
-      scoreList = handleDeleteDuplicateByContentsName(scoreList)
+      scoreList = handleDeleteDuplicateByKeyName(scoreList, 'requestNo__contentsName')
     }
+
+    // 全く同じ日時データの重複削除
+    scoreList = handleDeleteDuplicateByKeyName(scoreList, 'scoringDateTime')
 
     if (orderBy === 'date_time') {
       // 昇順で並び替え（点数）

@@ -12,11 +12,19 @@ interface SearchValues {
 
 // TODO: Stateメソッドのタイプを調べる
 function ScoreSearchForm(props: any) {
-  const [denmoku, selectedDenmokuChange] = useState<string>('ai')
-  const [artist_name, selectedArtistNameChange] = useState<string>('ヨルシカ')
-  const [contents_name, inputSongNameChange] = useState<string>('')
-  const [by_song, selectedBySongChange] = useState<string>('max_point')
-  const [order_by, selectedOrderByChange] = useState<string>('point')
+  const searchValues: SearchValues = {
+    denmoku: 'ai',
+    artist_name: 'ヨルシカ',
+    contents_name: '',
+    by_song: 'max_point',
+    order_by: 'point',
+  }
+
+  const [denmoku, selectedDenmokuChange] = useState<string>(searchValues.denmoku)
+  const [artist_name, selectedArtistNameChange] = useState<string>(searchValues.artist_name)
+  const [contents_name, inputSongNameChange] = useState<string>(searchValues.contents_name)
+  const [by_song, selectedBySongChange] = useState<string>(searchValues.by_song)
+  const [order_by, selectedOrderByChange] = useState<string>(searchValues.order_by)
 
   const denmokuList = [
     { value: 'ai', label: '精密採点 AI' },
