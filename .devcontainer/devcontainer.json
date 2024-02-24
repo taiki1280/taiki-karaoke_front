@@ -27,14 +27,6 @@
                 "esbenp.prettier-vscode"
             ],
             "settings": {
-                "files.autoSave": "afterDelay",
-                "editor.formatOnSave": true,
-                "editor.formatOnPaste": true,
-                "prettier.jsxSingleQuote": true,
-                "prettier.printWidth": 120,
-                "prettier.semi": false,
-                "prettier.singleQuote": true,
-                "editor.tabSize": 4,
                 "workbench.colorCustomizations": {
                     // タイトルバーの背景色
                     "titleBar.activeBackground": "#68A063",
@@ -43,27 +35,7 @@
                     "titleBar.activeForeground": "#303030",
                     "statusBar.background": "#3C873A",
                     "statusBar.foreground": "#303030"
-                },
-                "cSpell.words": [
-                    "devcontainer",
-                    "devcontainers",
-                    // extension creator's name
-                    "mhutchie",
-                    "humao",
-                    "Gruntfuggly",
-                    "esbenp",
-                    "TTFB",
-                    // application developer name
-                    "taiki",
-                    // application specific words
-                    "precache",
-                    "precached",
-                    "precaching",
-                    "denmoku",
-                    "kobushi",
-                    "shakuri",
-                    "longtone"
-                ]
+                }
             }
         }
     }
