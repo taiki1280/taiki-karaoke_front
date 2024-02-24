@@ -1,4 +1,4 @@
-interface ScoreDetail {
+interface ScoreDetailProps {
   radar_chart_pitch: Number
   radar_chart_expressive: Number
   song: {
@@ -34,7 +34,7 @@ interface ScoreDetail {
 const ScoreDetail = (): JSX.Element => {
   let loading = false
 
-  let detail: ScoreDetail = {
+  let scoreDetail: ScoreDetailProps = {
     radar_chart_pitch: Math.floor(Math.random() * 10),
     radar_chart_expressive: Math.floor(Math.random() * 10),
     song: {
@@ -74,57 +74,59 @@ const ScoreDetail = (): JSX.Element => {
         <>
           <div>
             <p>音程・表現力グラフ</p>
-            {/* <p>音程：{detail.radar_chart_pitch} %</p>
-            <p>表現力：{detail.radar_chart_expressive} 点</p> */}
+            {/* <p>音程：{scoreDetail.radar_chart_pitch} %</p>
+            <p>表現力：{scoreDetail.radar_chart_expressive} 点</p> */}
             {/* <div className='flex justify-around'>
-              <PitchGraph data={detail}></PitchGraph>
+              <PitchGraph data={scoreDetail}></PitchGraph>
             </div> */}
           </div>
           <p>表現力チャート</p>
-          <div className='flex justify-around'>{/* <ExpressionRadarChart data={detail}></ExpressionRadarChart> */}</div>
+          <div className='flex justify-around'>
+            {/* <ExpressionRadarChart data={scoreDetail}></ExpressionRadarChart> */}
+          </div>
           <div>
-            <p>アーティスト名：{detail.song.artist_name}</p>
-            <p>曲名：{detail.song.contents_name}</p>
+            <p>アーティスト名：{scoreDetail.song.artist_name}</p>
+            <p>曲名：{scoreDetail.song.contents_name}</p>
             <hr />
-            <p>総合点：{String(detail.total_point)} 点</p>
-            <p>素点：{String(detail.point)} 点</p>
-            <p>ボーナスタイプ：{detail.bonus_type}</p>
-            <p>ボーナスポイント：{String(detail.bonus_point)} 点</p>
-            <p>全国平均：（取得時？日々変わる？）：{String(detail.national_average_total_points)} 点</p>
-            <p>前回点数：{detail.last_total_points}</p>
+            <p>総合点：{String(scoreDetail.total_point)} 点</p>
+            <p>素点：{String(scoreDetail.point)} 点</p>
+            <p>ボーナスタイプ：{scoreDetail.bonus_type}</p>
+            <p>ボーナスポイント：{String(scoreDetail.bonus_point)} 点</p>
+            <p>全国平均：（取得時？日々変わる？）：{String(scoreDetail.national_average_total_points)} 点</p>
+            <p>前回点数：{scoreDetail.last_total_points}</p>
             <hr />
-            <p>分析レポート：{detail.analysis_report_comment.comment}</p>
+            <p>分析レポート：{scoreDetail.analysis_report_comment.comment}</p>
             <hr />
-            <p>抑揚：{String(detail.intonation)} 点</p>
-            <p>しゃくり：{String(detail.shakuri_count)} 回</p>
-            <p>こぶし{String(detail.kobushi_count)} 回</p>
-            <p>フォール：{String(detail.fall_count)} 回</p>
+            <p>抑揚：{String(scoreDetail.intonation)} 点</p>
+            <p>しゃくり：{String(scoreDetail.shakuri_count)} 回</p>
+            <p>こぶし{String(scoreDetail.kobushi_count)} 回</p>
+            <p>フォール：{String(scoreDetail.fall_count)} 回</p>
             <hr />
-            <p>ロングトーン 上手さ：{detail.longtone_skill} / 10</p>
-            <p>安定性（チャートの情報？？？）：{String(detail.radar_chart_stability)}</p>
-            <p>タメ？：{String(detail.timing)}</p>
-            <p>ビブラート 合計：{String(detail.vibrato_total_second)} 秒</p>
-            <p>ビブラート 回数：{String(detail.vibrato_count)} 回</p>
-            <p>ビブラート 上手さ：{detail.vibrato_skill} / 10</p>
-            <p>ビブラート タイプ：{detail.vibrato_type}</p>
-            <p>最高声域（曲？）：{String(detail.singing_range_highest)}</p>
-            <p>最低声域（曲？）：{String(detail.singing_range_lowest)}</p>
-            <p>最高声域（自分？）：{String(detail.vocal_range_highest)}</p>
-            <p>最低声域（自分？）：{String(detail.vocal_range_lowest)}</p>
+            <p>ロングトーン 上手さ：{scoreDetail.longtone_skill} / 10</p>
+            <p>安定性（チャートの情報？？？）：{String(scoreDetail.radar_chart_stability)}</p>
+            <p>タメ？：{String(scoreDetail.timing)}</p>
+            <p>ビブラート 合計：{String(scoreDetail.vibrato_total_second)} 秒</p>
+            <p>ビブラート 回数：{String(scoreDetail.vibrato_count)} 回</p>
+            <p>ビブラート 上手さ：{scoreDetail.vibrato_skill} / 10</p>
+            <p>ビブラート タイプ：{scoreDetail.vibrato_type}</p>
+            <p>最高声域（曲？）：{String(scoreDetail.singing_range_highest)}</p>
+            <p>最低声域（曲？）：{String(scoreDetail.singing_range_lowest)}</p>
+            <p>最高声域（自分？）：{String(scoreDetail.vocal_range_highest)}</p>
+            <p>最低声域（自分？）：{String(scoreDetail.vocal_range_lowest)}</p>
             <hr />
           </div>
 
           {/* <h1 className='text-3xl py-2'>Songテーブル</h1>
           <div className='ml-4'>
-            {get_table_data(detail.song)}
+            {get_table_data(scoreDetail.song)}
           </div>
           <h1 className='text-3xl py-2 mt-2'>analysisReportCommentテーブル</h1>
           <div className='ml-4'>
-            {get_table_data(detail.analysis_report_comment)}
+            {get_table_data(scoreDetail.analysis_report_comment)}
           </div>
           <h1 className='text-3xl py-2 mt-2'>Scoreテーブル</h1>
           <div className='ml-4'>
-            {get_table_data(detail)}
+            {get_table_data(scoreDetail)}
           </div> */}
         </>
       )}
