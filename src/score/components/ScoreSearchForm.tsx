@@ -3,20 +3,20 @@ import axios from 'axios'
 
 interface SearchValues {
   denmoku: string
-  artist_name: string
-  contents_name: string
-  by_song: string
-  order_by: string
+  artistName: string
+  contentsName: string
+  bySong: string
+  orderBy: string
 }
 
 // TODO: Stateメソッドのタイプを調べる
 function ScoreSearchForm(props: any) {
   const searchValues: SearchValues = {
     denmoku: localStorage.getItem('denmoku') ?? '',
-    artist_name: localStorage.getItem('artist_name') ?? '',
-    contents_name: localStorage.getItem('contents_name') ?? '',
-    by_song: localStorage.getItem('by_song') ?? '',
-    order_by: localStorage.getItem('order_by') ?? '',
+    artistName: localStorage.getItem('artistName') ?? '',
+    contentsName: localStorage.getItem('contentsName') ?? '',
+    bySong: localStorage.getItem('bySong') ?? '',
+    orderBy: localStorage.getItem('orderBy') ?? '',
   }
 
   const denmokuList = [
@@ -62,7 +62,7 @@ function ScoreSearchForm(props: any) {
 
     axios.get(DJANGO__URL + 'artist/').then((res) => {
       // APIからデータ取得
-      let artistNameList: string[] = res.data.map((d: any) => d.artistName)
+      let artistNameList: string[] = res.data.map((d: any) => d.artist_name)
       artistNameList = ['未選択', 'ヨルシカ', 'suis from ヨルシカ', 'ヨルシカメドレー', 'YOASOBI'].concat(
         artistNameList,
       )
@@ -94,6 +94,8 @@ function ScoreSearchForm(props: any) {
               id='denmoku'
               onChange={(event) => {
                 localStorage.setItem('denmoku', event.target.value)
+                // デンモクを変更したときは api が変わるので未取得ステータスへ更新
+                props.setLoadedScoreList(false)
                 props.selectedDenmokuChange(event.target.value)
               }}
               defaultValue={searchValues.denmoku}
@@ -115,10 +117,10 @@ function ScoreSearchForm(props: any) {
               name='artist_name'
               id='artist_name'
               onChange={(event) => {
-                localStorage.setItem('artist_name', event.target.value)
+                localStorage.setItem('artistName', event.target.value)
                 props.selectedArtistNameChange(event.target.value)
               }}
-              defaultValue={searchValues.artist_name}
+              defaultValue={searchValues.artistName}
             >
               {artistNameList.map((d: string, i: number) => (
                 <option
@@ -139,10 +141,10 @@ function ScoreSearchForm(props: any) {
               id='contents_name'
               onChange={(event) => {
                 console.log(event.target.name)
-                localStorage.setItem('contents_name', event.target.value)
+                localStorage.setItem('contentsName', event.target.value)
                 props.inputSongNameChange(event.target.value)
               }}
-              defaultValue={searchValues.contents_name}
+              defaultValue={searchValues.contentsName}
             />
           </div>
           <div className='p-1'>
@@ -152,10 +154,10 @@ function ScoreSearchForm(props: any) {
               name='by_song'
               id='by_song'
               onChange={(event) => {
-                localStorage.setItem('by_song', event.target.value)
+                localStorage.setItem('bySong', event.target.value)
                 props.selectedBySongChange(event.target.value)
               }}
-              defaultValue={searchValues.by_song}
+              defaultValue={searchValues.bySong}
             >
               {bySongList.map((d, i) => (
                 <option
@@ -174,10 +176,10 @@ function ScoreSearchForm(props: any) {
               name='order_by'
               id='order_by'
               onChange={(event) => {
-                localStorage.setItem('order_by', event.target.value)
+                localStorage.setItem('orderBy', event.target.value)
                 props.selectedOrderByChange(event.target.value)
               }}
-              defaultValue={searchValues.order_by}
+              defaultValue={searchValues.orderBy}
             >
               {orderByList.map((d, i) => (
                 <option

@@ -1,22 +1,21 @@
 import {Link} from 'react-router-dom'
 
 interface Score {
-  // id: Number,
-  scoringDateTime: String
-  totalPoints: String
+  total_points: string
+  scoring_date_time: string
   // Ai
-  aiSensitivityBonus: String | null
+  ai_sensitivity_bonus: string | null
   // DX-G
-  bonusPoint: String | null
-  requestNo__artist__artistName: String
-  requestNo__contentsName: String
+  bonus_point: string | null
+  music__artist__artist_name: string
+  music__contents_name: string
 }
 
 const ScoreContent = (props: {score: Score; denmoku: String; isSortedTotalPoint: Boolean}) => {
-  let total_point: String = (Number(props.score.totalPoints) / 1000).toFixed(3)
+  let total_point: String = (Number(props.score.total_points) / 1000).toFixed(3)
   // 素点を計算（現状、Aiボーナス点は計算内にしか使用されていない）
   let point: String = (
-    (Number(props.score.totalPoints) - Number(props.score.aiSensitivityBonus || props.score.bonusPoint)) /
+    (Number(props.score.total_points) - Number(props.score.ai_sensitivity_bonus || props.score.bonus_point)) /
     1000
   ).toFixed(3)
 
@@ -30,7 +29,7 @@ const ScoreContent = (props: {score: Score; denmoku: String; isSortedTotalPoint:
 
   return (
     <div className='py-2 border-b-2'>
-      <time className='date_time px-4 text-xs'>{props.score.scoringDateTime}</time>
+      <time className='date_time px-4 text-xs'>{props.score.scoring_date_time}</time>
       <div className='flex items-center justify-evenly'>
         <div className='basis-3/12 flex flex-col items-center md:basis-1/12'>
           <span className='point text-lg'>{point}</span>
@@ -38,15 +37,15 @@ const ScoreContent = (props: {score: Score; denmoku: String; isSortedTotalPoint:
             <span className='total_point basis-full text-center text-xs'>{total_point}</span>
             <Link
               className='detail basis-full text-center text-xs text-blue-500 underline underline-offset-1'
-              to={`/score/${props.score.scoringDateTime}`}
+              to={`/score/${props.score.scoring_date_time}`}
             >
               詳細
             </Link>
           </div>
         </div>
         <div className='basis-8/12 flex flex-col md:basis-10/12'>
-          <span className='d_artist_name text-xs'>{props.score.requestNo__artist__artistName}</span>
-          <cite className='d_contents_name text-lg'>{props.score.requestNo__contentsName}</cite>
+          <span className='d_artist_name text-xs'>{props.score.music__artist__artist_name}</span>
+          <cite className='d_contents_name text-lg'>{props.score.music__contents_name}</cite>
         </div>
       </div>
     </div>

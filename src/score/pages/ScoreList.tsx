@@ -4,14 +4,14 @@ import ScoreContent from '../components/ScoreContent'
 import ScoreSearchForm from '../components/ScoreSearchForm'
 
 interface Score {
-  totalPoints: string
-  scoringDateTime: string
+  total_points: string
+  scoring_date_time: string
   // Ai
-  aiSensitivityBonus: string | null
+  ai_sensitivity_bonus: string | null
   // DX-G
-  bonusPoint: string | null
-  requestNo__artist__artistName: string
-  requestNo__contentsName: string
+  bonus_point: string | null
+  music__artist__artist_name: string
+  music__contents_name: string
 }
 
 // アーティスト名で絞り込みするメソッド
@@ -20,7 +20,7 @@ function handleFilterScoreListByArtist(allScoreList: Score[], artistName: string
   const line = allScoreList.filter(
     (item) =>
       // アーティスト名が含まれている場合、true
-      item.requestNo__artist__artistName.toLowerCase().indexOf(artistName.toLowerCase()) >= 0,
+      item.music__artist__artist_name.toLowerCase().indexOf(artistName.toLowerCase()) >= 0,
   )
   return line
 }
@@ -31,7 +31,7 @@ function handleFilterSong(scoreList: Score[], songName: string): Score[] {
   const line = scoreList.filter(
     (item) =>
       // アーティスト名が含まれている場合、true
-      item.requestNo__contentsName.toLowerCase().indexOf(songName.toLowerCase()) >= 0,
+      item.music__contents_name.toLowerCase().indexOf(songName.toLowerCase()) >= 0,
   )
   return line
 }
@@ -95,11 +95,11 @@ const ScoreList = () => {
   const [scoreList, setScoreList] = useState<Score[]>([])
 
   // ScoreSearchForm同様の項目
-  const [denmoku, selectedDenmokuChange] = useState<string>('ai')
-  const [artistName, selectedArtistNameChange] = useState<string>('ヨルシカ')
-  const [contentsName, inputSongNameChange] = useState<string>('')
-  const [bySong, selectedBySongChange] = useState<string>('max_point')
-  const [orderBy, selectedOrderByChange] = useState<string>('point')
+  const [denmoku, selectedDenmokuChange] = useState<string>(localStorage.getItem('denmoku') ?? 'dxg')
+  const [artistName, selectedArtistNameChange] = useState<string>(localStorage.getItem('artistName') ?? '')
+  const [contentsName, inputSongNameChange] = useState<string>(localStorage.getItem('contentsName') ?? '')
+  const [bySong, selectedBySongChange] = useState<string>(localStorage.getItem('bySong') ?? '')
+  const [orderBy, selectedOrderByChange] = useState<string>(localStorage.getItem('orderBy') ?? '')
 
   useEffect(() => {
     // 取得済の場合、実行しない
@@ -110,7 +110,7 @@ const ScoreList = () => {
 
     axios.get(DJANGO__URL + denmoku + '/').then((res) => {
       // APIからデータ取得
-      console.log('API取得データ')
+      console.log('api: データ取得')
       setConnectedApi(true)
       setAllScoreList(res.data)
     })
@@ -120,7 +120,7 @@ const ScoreList = () => {
   useEffect(() => {
     if (!loadedScoreList) return
 
-    console.log('スコアデータ更新')
+    console.log('front: データ更新')
     let scoreList: Score[] = handleFilterScoreListByArtist(allScoreList, artistName)
     if (contentsName !== '') {
       scoreList = handleFilterSong(scoreList, contentsName)
@@ -128,63 +128,63 @@ const ScoreList = () => {
 
     let bonusPointName = ''
     if (denmoku === 'ai') {
-      bonusPointName = 'aiSensitivityBonus'
+      bonusPointName = 'ai_sensitivity_bonus'
     } else if (denmoku === 'dxg') {
-      bonusPointName = 'bonusPoint'
+      bonusPointName = 'bonus_point'
     }
 
     if (bySong === 'max_point' && bonusPointName !== '') {
       // 降順で並び替え（素点）
-      scoreList = handleSortPointByDescend(scoreList, 'totalPoints', bonusPointName)
+      scoreList = handleSortPointByDescend(scoreList, 'total_points', bonusPointName)
     } else if (bySong === 'max_total_point') {
       // 降順で並び替え（総合点）
-      scoreList = handleSortByDescend(scoreList, 'totalPoints')
+      scoreList = handleSortByDescend(scoreList, 'total_points')
     } else if (bySong === 'min_point' && bonusPointName !== '') {
       // 昇順で並び替え（素点）
-      scoreList = handleSortPointByAscend(scoreList, 'totalPoints', bonusPointName)
+      scoreList = handleSortPointByAscend(scoreList, 'total_points', bonusPointName)
     } else if (bySong === 'min_total_point') {
       // 昇順で並び替え（総合点）
-      scoreList = handleSortByAscend(scoreList, 'totalPoints')
+      scoreList = handleSortByAscend(scoreList, 'total_points')
     }
 
     if (bySong !== '') {
       // 曲名の重複を削除
-      scoreList = handleDeleteDuplicateByKeyName(scoreList, 'requestNo__contentsName')
+      scoreList = handleDeleteDuplicateByKeyName(scoreList, 'music__contents_name')
     }
 
     // 全く同じ日時データの重複削除
-    scoreList = handleDeleteDuplicateByKeyName(scoreList, 'scoringDateTime')
+    scoreList = handleDeleteDuplicateByKeyName(scoreList, 'scoring_date_time')
 
     if (orderBy === 'date_time') {
       // 昇順で並び替え（点数）
-      scoreList = handleSortByAscend(scoreList, 'scoringDateTime')
+      scoreList = handleSortByAscend(scoreList, 'scoring_date_time')
     } else if (orderBy === 'point') {
       // 昇順で並び替え（点数）
-      scoreList = handleSortPointByAscend(scoreList, 'totalPoints', bonusPointName)
+      scoreList = handleSortPointByAscend(scoreList, 'total_points', bonusPointName)
     } else if (orderBy === 'total_point') {
       // 昇順で並び替え（総合点）
-      scoreList = handleSortByAscend(scoreList, 'totalPoints')
+      scoreList = handleSortByAscend(scoreList, 'total_points')
     } else if (orderBy === 'song__artist_name') {
       // 昇順で並び替え（総合点）
-      scoreList = handleSortByAscend(scoreList, 'requestNo__artist__artistName')
+      scoreList = handleSortByAscend(scoreList, 'music__artist__artist_name')
     } else if (orderBy === 'song__contents_name') {
       // 昇順で並び替え（総合点）
-      scoreList = handleSortByAscend(scoreList, 'requestNo__contentsName')
+      scoreList = handleSortByAscend(scoreList, 'music__contents_name')
     } else if (orderBy === '-date_time') {
       // 降順で並び替え（点数）
-      scoreList = handleSortByDescend(scoreList, 'scoringDateTime')
+      scoreList = handleSortByDescend(scoreList, 'scoring_date_time')
     } else if (orderBy === '-point') {
       // 降順で並び替え（点数）
-      scoreList = handleSortPointByDescend(scoreList, 'totalPoints', bonusPointName)
+      scoreList = handleSortPointByDescend(scoreList, 'total_points', bonusPointName)
     } else if (orderBy === '-total_point') {
       // 降順で並び替え（総合点）
-      scoreList = handleSortByDescend(scoreList, 'totalPoints')
+      scoreList = handleSortByDescend(scoreList, 'total_points')
     } else if (orderBy === '-song__artist_name') {
       // 降順で並び替え（総合点）
-      scoreList = handleSortByDescend(scoreList, 'requestNo__artist__artistName')
+      scoreList = handleSortByDescend(scoreList, 'music__artist__artist_name')
     } else if (orderBy === '-song__contents_name') {
       // 降順で並び替え（総合点）
-      scoreList = handleSortByDescend(scoreList, 'requestNo__contentsName')
+      scoreList = handleSortByDescend(scoreList, 'music__contents_name')
     }
 
     // console.log(scoreList)
@@ -206,6 +206,7 @@ const ScoreList = () => {
     <>
       <ScoreSearchForm
         selectedDenmokuChange={selectedDenmokuChange}
+        setLoadedScoreList={setLoadedScoreList}
         selectedArtistNameChange={selectedArtistNameChange}
         inputSongNameChange={inputSongNameChange}
         selectedBySongChange={selectedBySongChange}
@@ -219,7 +220,7 @@ const ScoreList = () => {
               score={score}
               denmoku={denmoku}
               isSortedTotalPoint={orderBy === 'total_point' || orderBy === '-total_point'}
-              key={String(score.scoringDateTime)}
+              key={String(score.scoring_date_time)}
             />
           ))}
         </div>
