@@ -234,17 +234,16 @@ const ScoreList = () => {
 
   return (
     <>
+      <ScoreSearchForm
+        selectedDenmokuChange={selectedDenmokuChange}
+        selectedArtistNameChange={selectedArtistNameChange}
+        inputSongNameChange={inputSongNameChange}
+        selectedBySongChange={selectedBySongChange}
+        selectedOrderByChange={selectedOrderByChange}
+      />
       {connectedApi && loadedScoreList && filteredScoreList ? (
-        <>
-          <ScoreSearchForm
-            selectedDenmokuChange={selectedDenmokuChange}
-            selectedArtistNameChange={selectedArtistNameChange}
-            inputSongNameChange={inputSongNameChange}
-            selectedBySongChange={selectedBySongChange}
-            selectedOrderByChange={selectedOrderByChange}
-          />
+        <div id='result_search'>
           <h1 className='text-xl'>検索結果は {Object.keys(scoreList).length}件 でした～</h1>
-          {/* {scoreList.map(() => score)} */}
           {scoreList.map((score: Score) => (
             <ScoreContent
               score={score}
@@ -253,7 +252,7 @@ const ScoreList = () => {
               key={String(score.scoringDateTime)}
             />
           ))}
-        </>
+        </div>
       ) : (
         <>
           <h1 className='text-5xl text-center font-semibold p-10'>Now Loading...</h1>

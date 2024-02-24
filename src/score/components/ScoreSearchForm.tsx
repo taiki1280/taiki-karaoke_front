@@ -101,7 +101,7 @@ function ScoreSearchForm(props: any) {
   return (
     <>
       {loaded ? (
-        <>
+        <form>
           <div className='flex justify-end'>
             <button className='bg-red-600 p-1 border-2 rounded-lg' onClick={handleDeleteLocalStorage}>
               検索履歴削除
@@ -198,7 +198,7 @@ function ScoreSearchForm(props: any) {
               ))}
             </select>
           </div>
-        </>
+        </form>
       ) : (
         <div>
           {/* <h1 className='text-base text-center font-semibold p-4'>Now Loading...</h1> */}
