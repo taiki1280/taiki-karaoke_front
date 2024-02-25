@@ -57,10 +57,9 @@ function ScoreSearchForm(props: any) {
     // 取得済の場合、実行しない
     if (loadedArtistNameList) return
 
-    const DJANGO__URL = process.env.REACT_APP_DJANGO_APP_API_URL ?? null
-    if (DJANGO__URL === null) return
+    if (process.env.REACT_APP_DJANGO_APP_API_URL === null) return
 
-    axios.get(DJANGO__URL + 'artist/').then((res) => {
+    axios.get(process.env.REACT_APP_DJANGO_APP_API_URL + 'artist/').then((res) => {
       // APIからデータ取得
       let artistNameList: string[] = res.data.map((d: any) => d.artist_name)
       artistNameList = ['未選択', 'ヨルシカ', 'suis from ヨルシカ', 'ヨルシカメドレー', 'YOASOBI'].concat(
@@ -194,8 +193,7 @@ function ScoreSearchForm(props: any) {
         </form>
       ) : (
         <div>
-          {/* <h1 className='text-base text-center font-semibold p-4'>Now Loading...</h1> */}
-          <h1 className='text-base text-center font-semibold p-4'>検索フォーム開発中</h1>
+          <h1 className='text-base text-center font-semibold p-4'>Loading search form...</h1>
         </div>
       )}
     </>

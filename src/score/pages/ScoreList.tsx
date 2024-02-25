@@ -105,10 +105,9 @@ const ScoreList = () => {
     // 取得済の場合、実行しない
     if (loadedScoreList) return
 
-    const DJANGO__URL = process.env.REACT_APP_DJANGO_APP_API_URL ?? null
-    if (DJANGO__URL === null) return
+    if (process.env.REACT_APP_DJANGO_APP_API_URL === null) return
 
-    axios.get(DJANGO__URL + denmoku + '/').then((res) => {
+    axios.get(process.env.REACT_APP_DJANGO_APP_API_URL + denmoku + '/').then((res) => {
       // APIからデータ取得
       console.log('api: データ取得')
       setConnectedApi(true)
@@ -194,8 +193,10 @@ const ScoreList = () => {
   }, [loadedScoreList, denmoku, allScoreList, artistName, contentsName, bySong, orderBy])
 
   let message: string = ''
-  if (!connectedApi) {
+  if (process.env.REACT_APP_DJANGO_APP_API_URL === null) {
     message = 'API 環境変数に値を設定をしてください。'
+  } else if (!connectedApi) {
+    message = 'API に接続できませんでした。'
   } else if (!loadedScoreList) {
     message = 'API からデータ取得中です。'
   } else if (!filteredScoreList) {
