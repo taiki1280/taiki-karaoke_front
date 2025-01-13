@@ -6,7 +6,7 @@ services:
     container_name: "karaoke_front"
     environment:
       VIRTUAL_HOST: 'taiki-web.ninsan.mydns.jp'
-      restart: always
+    restart: always
 
 networks:
   default:
