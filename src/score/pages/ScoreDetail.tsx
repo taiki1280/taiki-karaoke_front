@@ -1,38 +1,38 @@
 interface ScoreDetailProps {
-  radar_chart_pitch: Number
-  radar_chart_expressive: Number
+  radar_chart_pitch: Number;
+  radar_chart_expressive: Number;
   song: {
-    artist_name: String
-    contents_name: String
-  }
-  total_point: Number
-  point: Number
-  bonus_type: String
-  bonus_point: Number
-  national_average_total_points: Number
-  last_total_points: String
+    artist_name: String;
+    contents_name: String;
+  };
+  total_point: Number;
+  point: Number;
+  bonus_type: String;
+  bonus_point: Number;
+  national_average_total_points: Number;
+  last_total_points: String;
   analysis_report_comment: {
-    comment: String
-  }
-  intonation: Number
-  shakuri_count: Number
-  kobushi_count: Number
-  fall_count: Number
-  longtone_skill: String
-  radar_chart_stability: Number
-  timing: Number
-  vibrato_total_second: Number
-  vibrato_count: Number
-  vibrato_skill: String
-  vibrato_type: String
-  singing_range_highest: Number
-  singing_range_lowest: Number
-  vocal_range_highest: Number
-  vocal_range_lowest: Number
+    comment: String;
+  };
+  intonation: Number;
+  shakuri_count: Number;
+  kobushi_count: Number;
+  fall_count: Number;
+  longtone_skill: String;
+  radar_chart_stability: Number;
+  timing: Number;
+  vibrato_total_second: Number;
+  vibrato_count: Number;
+  vibrato_skill: String;
+  vibrato_type: String;
+  singing_range_highest: Number;
+  singing_range_lowest: Number;
+  vocal_range_highest: Number;
+  vocal_range_lowest: Number;
 }
 
-const ScoreDetail = (): JSX.Element => {
-  let loading = false
+const ScoreDetail = () => {
+  let loading = false;
 
   let scoreDetail: ScoreDetailProps = {
     radar_chart_pitch: Math.floor(Math.random() * 10),
@@ -65,7 +65,7 @@ const ScoreDetail = (): JSX.Element => {
     singing_range_lowest: Math.floor(Math.random() * 10),
     vocal_range_highest: Math.floor(Math.random() * 10),
     vocal_range_lowest: Math.floor(Math.random() * 10),
-  }
+  };
   return (
     <>
       {loading ? (
@@ -131,7 +131,7 @@ const ScoreDetail = (): JSX.Element => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ScoreDetail
+export default ScoreDetail;

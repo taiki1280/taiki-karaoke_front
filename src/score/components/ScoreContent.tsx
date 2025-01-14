@@ -1,30 +1,30 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 interface Score {
-  total_points: string
-  scoring_date_time: string
+  total_points: string;
+  scoring_date_time: string;
   // Ai
-  ai_sensitivity_bonus: string | null
+  ai_sensitivity_bonus: string | null;
   // DX-G
-  bonus_point: string | null
-  music__artist__artist_name: string
-  music__contents_name: string
+  bonus_point: string | null;
+  music__artist__artist_name: string;
+  music__contents_name: string;
 }
 
-const ScoreContent = (props: {score: Score; denmoku: String; isSortedTotalPoint: Boolean}) => {
-  let total_point: String = (Number(props.score.total_points) / 1000).toFixed(3)
+const ScoreContent = (props: { score: Score; denmoku: String; isSortedTotalPoint: Boolean }) => {
+  let total_point: String = (Number(props.score.total_points) / 1000).toFixed(3);
   // 素点を計算（現状、Aiボーナス点は計算内にしか使用されていない）
   let point: String = (
     (Number(props.score.total_points) - Number(props.score.ai_sensitivity_bonus || props.score.bonus_point)) /
     1000
-  ).toFixed(3)
+  ).toFixed(3);
 
   if (props.isSortedTotalPoint) {
     // ソート順が総合点（昇順） or 総合点（降順）であった場合、
     // 総合点と素点の中身を入れ替えて表示する
-    let tmp = total_point
-    total_point = point
-    point = '（総）' + tmp
+    let tmp = total_point;
+    total_point = point;
+    point = '（総）' + tmp;
   }
 
   return (
@@ -49,7 +49,7 @@ const ScoreContent = (props: {score: Score; denmoku: String; isSortedTotalPoint:
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ScoreContent
+export default ScoreContent;

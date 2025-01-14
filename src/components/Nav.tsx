@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Nav = () => {
   return (
@@ -16,7 +16,7 @@ const Nav = () => {
         点数一覧
       </Link>
     </nav>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;

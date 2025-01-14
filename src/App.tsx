@@ -1,10 +1,10 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Top from './Top'
-import ScoreTop from './score/pages/ScoreList'
-import ScoreDetail from './score/pages/ScoreDetail'
-import {NotFound} from './score/pages/NotFound'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Top from './Top';
+import ScoreTop from './score/pages/ScoreList';
+import ScoreDetail from './score/pages/ScoreDetail';
+import { NotFound } from './score/pages/NotFound';
 
 const App = () => {
   return (
@@ -32,7 +32,7 @@ const App = () => {
         </Routes>
       </main>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;

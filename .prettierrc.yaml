@@ -2,10 +2,10 @@ useTabs: false
 endOfLine: lf
 singleQuote: true
 jsxSingleQuote: true
-semi: false
+semi: true
 singleAttributePerLine: true
 quoteProps: 'as-needed'
-bracketSpacing: false
+bracketSpacing: true
 printWidth: 120
 overrides:
   - files: '*.json'

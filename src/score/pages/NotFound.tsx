@@ -5,5 +5,5 @@ export const NotFound = () => {
       <h3>お探しのページは見つかりませんでした。</h3>
       <h4>not found...</h4>
     </>
-  )
-}
+  );
+};

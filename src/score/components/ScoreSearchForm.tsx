@@ -1,12 +1,12 @@
-import {useState, useEffect} from 'react'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface SearchValues {
-  denmoku: string
-  artistName: string
-  contentsName: string
-  bySong: string
-  orderBy: string
+  denmoku: string;
+  artistName: string;
+  contentsName: string;
+  bySong: string;
+  orderBy: string;
 }
 
 // TODO: Stateメソッドのタイプを調べる
@@ -17,61 +17,61 @@ function ScoreSearchForm(props: any) {
     contentsName: localStorage.getItem('contentsName') ?? '',
     bySong: localStorage.getItem('bySong') ?? '',
     orderBy: localStorage.getItem('orderBy') ?? '',
-  }
+  };
 
   const denmokuList = [
-    {value: 'ai', label: '精密採点 AI'},
-    {value: 'dxg', label: '精密採点 DX-G'},
+    { value: 'ai', label: '精密採点 AI' },
+    { value: 'dxg', label: '精密採点 DX-G' },
     // { value: 'dx', label: '精密採点 DX' },
-  ]
+  ];
 
   const bySongList = [
-    {value: '', label: '未選択'},
-    {value: 'max_point', label: '素点（自己ベスト）'},
-    {value: 'min_point', label: '素点（自己ワースト）'},
-    {value: 'max_total_point', label: '総合点（自己ベスト）'},
-    {value: 'min_total_point', label: '総合点（自己ワースト）'},
-  ]
+    { value: '', label: '未選択' },
+    { value: 'max_point', label: '素点（自己ベスト）' },
+    { value: 'min_point', label: '素点（自己ワースト）' },
+    { value: 'max_total_point', label: '総合点（自己ベスト）' },
+    { value: 'min_total_point', label: '総合点（自己ワースト）' },
+  ];
 
   const orderByList = [
-    {value: 'date_time', label: '日付（昇順）'},
-    {value: '-date_time', label: '日付（降順）'},
-    {value: 'point', label: '素点（昇順）'},
-    {value: '-point', label: '素点（降順）'},
-    {value: 'total_point', label: '総合点（昇順）'},
-    {value: '-total_point', label: '総合点（降順）'},
-    {value: 'song__artist_name', label: 'アーティスト名（昇順）'},
-    {value: '-song__artist_name', label: 'アーティスト名（降順）'},
-    {value: 'song__contents_name', label: '曲名（昇順）'},
-    {value: '-song__contents_name', label: '曲名（降順）'},
-  ]
-  const [loadedArtistNameList, setLoadedArtistNameList] = useState<Boolean>(false)
-  const [artistNameList, setArtistNameList] = useState<string[]>([])
+    { value: 'date_time', label: '日付（昇順）' },
+    { value: '-date_time', label: '日付（降順）' },
+    { value: 'point', label: '素点（昇順）' },
+    { value: '-point', label: '素点（降順）' },
+    { value: 'total_point', label: '総合点（昇順）' },
+    { value: '-total_point', label: '総合点（降順）' },
+    { value: 'song__artist_name', label: 'アーティスト名（昇順）' },
+    { value: '-song__artist_name', label: 'アーティスト名（降順）' },
+    { value: 'song__contents_name', label: '曲名（昇順）' },
+    { value: '-song__contents_name', label: '曲名（降順）' },
+  ];
+  const [loadedArtistNameList, setLoadedArtistNameList] = useState<Boolean>(false);
+  const [artistNameList, setArtistNameList] = useState<string[]>([]);
 
   const handleDeleteLocalStorage = () => {
-    localStorage.clear()
-    window.location.reload()
-  }
+    localStorage.clear();
+    window.location.reload();
+  };
 
   useEffect(() => {
     // 取得済の場合、実行しない
-    if (loadedArtistNameList) return
+    if (loadedArtistNameList) return;
 
-    if (process.env.REACT_APP_DJANGO_APP_API_URL === null) return
+    if (process.env.REACT_APP_DJANGO_APP_API_URL === null) return;
 
     axios.get(process.env.REACT_APP_DJANGO_APP_API_URL + 'artist/').then((res) => {
       // APIからデータ取得
-      let artistNameList: string[] = res.data.map((d: any) => d.artist_name)
+      let artistNameList: string[] = res.data.map((d: any) => d.artist_name);
       artistNameList = ['未選択', 'ヨルシカ', 'suis from ヨルシカ', 'ヨルシカメドレー', 'YOASOBI'].concat(
         artistNameList,
-      )
-      artistNameList = Array.from(new Set(artistNameList))
-      console.log('アーティスト一覧')
-      console.log(artistNameList)
-      setArtistNameList(artistNameList)
-      setLoadedArtistNameList(true)
-    })
-  }, [loadedArtistNameList])
+      );
+      artistNameList = Array.from(new Set(artistNameList));
+      console.log('アーティスト一覧');
+      console.log(artistNameList);
+      setArtistNameList(artistNameList);
+      setLoadedArtistNameList(true);
+    });
+  }, [loadedArtistNameList]);
 
   return (
     <>
@@ -92,10 +92,10 @@ function ScoreSearchForm(props: any) {
               name='denmoku'
               id='denmoku'
               onChange={(event) => {
-                localStorage.setItem('denmoku', event.target.value)
+                localStorage.setItem('denmoku', event.target.value);
                 // デンモクを変更したときは api が変わるので未取得ステータスへ更新
-                props.setLoadedScoreList(false)
-                props.selectedDenmokuChange(event.target.value)
+                props.setLoadedScoreList(false);
+                props.selectedDenmokuChange(event.target.value);
               }}
               defaultValue={searchValues.denmoku}
             >
@@ -116,8 +116,8 @@ function ScoreSearchForm(props: any) {
               name='artist_name'
               id='artist_name'
               onChange={(event) => {
-                localStorage.setItem('artistName', event.target.value)
-                props.selectedArtistNameChange(event.target.value)
+                localStorage.setItem('artistName', event.target.value);
+                props.selectedArtistNameChange(event.target.value);
               }}
               defaultValue={searchValues.artistName}
             >
@@ -139,9 +139,9 @@ function ScoreSearchForm(props: any) {
               name='contents_name'
               id='contents_name'
               onChange={(event) => {
-                console.log(event.target.name)
-                localStorage.setItem('contentsName', event.target.value)
-                props.inputSongNameChange(event.target.value)
+                console.log(event.target.name);
+                localStorage.setItem('contentsName', event.target.value);
+                props.inputSongNameChange(event.target.value);
               }}
               defaultValue={searchValues.contentsName}
             />
@@ -153,8 +153,8 @@ function ScoreSearchForm(props: any) {
               name='by_song'
               id='by_song'
               onChange={(event) => {
-                localStorage.setItem('bySong', event.target.value)
-                props.selectedBySongChange(event.target.value)
+                localStorage.setItem('bySong', event.target.value);
+                props.selectedBySongChange(event.target.value);
               }}
               defaultValue={searchValues.bySong}
             >
@@ -175,8 +175,8 @@ function ScoreSearchForm(props: any) {
               name='order_by'
               id='order_by'
               onChange={(event) => {
-                localStorage.setItem('orderBy', event.target.value)
-                props.selectedOrderByChange(event.target.value)
+                localStorage.setItem('orderBy', event.target.value);
+                props.selectedOrderByChange(event.target.value);
               }}
               defaultValue={searchValues.orderBy}
             >
@@ -197,7 +197,7 @@ function ScoreSearchForm(props: any) {
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default ScoreSearchForm
+export default ScoreSearchForm;
