@@ -9,4 +9,4 @@ RUN npm run build
 # 実行フェーズ
 FROM nginx
 COPY ./docker/nginx/conf.d/karaoke.conf /etc/nginx/conf.d/karaoke.conf
-COPY --from=0 /karaoke/build /usr/share/nginx/html/
+COPY --from=0 /karaoke/dist /usr/share/nginx/html/
