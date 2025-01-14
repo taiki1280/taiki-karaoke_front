@@ -15,7 +15,8 @@
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "yarn install",
+    "postCreateCommand": "npm install",
+    "postStartCommand": "npm run start",
     // Configure tool-specific properties.
     "customizations": {
         "vscode": {
@@ -24,7 +25,8 @@
                 "humao.rest-client",
                 "Gruntfuggly.todo-tree",
                 "streetsidesoftware.code-spell-checker",
-                "esbenp.prettier-vscode"
+                "esbenp.prettier-vscode",
+                "vite"
             ],
             "settings": {
                 "workbench.colorCustomizations": {

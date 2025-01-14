@@ -57,9 +57,9 @@ function ScoreSearchForm(props: any) {
     // 取得済の場合、実行しない
     if (loadedArtistNameList) return;
 
-    if (process.env.REACT_APP_DJANGO_APP_API_URL === null) return;
+    if (import.meta.env.VITE_DJANGO_APP_API_URL === null) return;
 
-    axios.get(process.env.REACT_APP_DJANGO_APP_API_URL + 'artist/').then((res) => {
+    axios.get(import.meta.env.VITE_DJANGO_APP_API_URL + 'artist/').then((res) => {
       // APIからデータ取得
       let artistNameList: string[] = res.data.map((d: any) => d.artist_name);
       artistNameList = ['未選択', 'ヨルシカ', 'suis from ヨルシカ', 'ヨルシカメドレー', 'YOASOBI'].concat(

@@ -105,9 +105,9 @@ const ScoreList = () => {
     // 取得済の場合、実行しない
     if (loadedScoreList) return;
 
-    if (process.env.REACT_APP_DJANGO_APP_API_URL === null) return;
+    if (import.meta.env.VITE_DJANGO_APP_API_URL === null) return;
 
-    axios.get(process.env.REACT_APP_DJANGO_APP_API_URL + denmoku + '/').then((res) => {
+    axios.get(import.meta.env.VITE_DJANGO_APP_API_URL + denmoku + '/').then((res) => {
       // APIからデータ取得
       console.log('api: データ取得');
       setConnectedApi(true);
@@ -193,8 +193,8 @@ const ScoreList = () => {
   }, [loadedScoreList, denmoku, allScoreList, artistName, contentsName, bySong, orderBy]);
 
   let message: string = '';
-  if (process.env.REACT_APP_DJANGO_APP_API_URL === null) {
-    message = 'API 環境変数に値を設定をしてください。';
+  if (import.meta.env.VITE_DJANGO_APP_API_URL === null) {
+    message = 'API 環境変数に値を設定してください。';
   } else if (!connectedApi) {
     message = 'API に接続できませんでした。';
   } else if (!loadedScoreList) {
